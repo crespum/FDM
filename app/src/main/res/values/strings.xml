@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">FDM</string>
+    <string name="title_event_detail">Event Detail</string>
+    <string name="action_settings">Axustes</string>
+    <string name="ab_share">Compartir</string>
+    <string name="ab_contact">Contacta</string>
+    <string name="ab_menu">Menú</string>
+    <string name="new_title">Novidades</string>
+    <string name="new_message">* Pinche na icona vermella para localizar o lugar de celebración en Google Maps</string>
+    <string name="new_ok">OK</string>
+    <string name="pref_title_version">Versión</string>
+    <string name="pref_title_about">Sobre FDM</string>
+    <string name="pref_summary_seguir">Seguir a @xbcrespo en Twitter</string>
+    <string name="pref_title_seguir">Seguir</string>
+    <string name="pref_summary_contact">Enviar un email ao autor</string>
+    <string name="pref_title_contact">Contactar</string>
+    <string name="pref_summary_share">Comparte esta app cos teus amigos</string>
+    <string name="pref_title_share">Compartir</string>
+    <string name="pref_share_content">Coñeces xa a app das Festas do Monte? Búscaa na Play Store #fdmapp http://www.ir.gl/fdm</string>
+    <string name="JSON_espera">Agarde por favor…</string>
+    <string name="JSON_not_found">Erro no servizo. Faga click aquí para buscar actualización na Play Store.</string>
+    <string name="no_events_found">Non se atopou ningún evento</string>
+</resources>
