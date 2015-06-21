@@ -37,10 +37,7 @@ public class EventListActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
-        ArrayList<Item> alEvents = new ArrayList(10);
-        Log.d("TEST", "Entra------");
-        JSONReader jr = new JSONReader(this, "https://www.dropbox.com/s/ekflrytyix82z7g/Eventos.txt?dl=1", alEvents);
-        jr.execute();
+
         if (findViewById(R.id.event_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -50,9 +47,9 @@ public class EventListActivity extends FragmentActivity
 
             // In two-pane mode, list items should be given the
             // 'activated' state when touched.
-            ((EventListFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.event_list))
-                    .setActivateOnItemClick(true);
+            //((EventListFragment) getSupportFragmentManager()
+            //        .findFragmentById(R.id.event_list))
+            //        .setActivateOnItemClick(true);
         }
 
         // TODO: If exposing deep links into your app, handle intents here.

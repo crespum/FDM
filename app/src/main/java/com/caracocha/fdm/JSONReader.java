@@ -54,12 +54,6 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
         this.ifJSON = ifJSON;
     }
 
-    public JSONReader(Context context, String sURL, ArrayList alEvents) {
-        this.context = context;
-        this.sURL = sURL;
-        this.alEvents = alEvents;
-    }
-
     /**
      * Parses the JSON string and creates an ArrayList containing all the events that will be
      * displayed in the mail list.

@@ -3,13 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="${relativePackage}.${activityClass}" >
+    tools:context="${relativePackage}.${activityClass}">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/event_list"
+        android:name="com.caracocha.fdm.EventListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:context=".MainActivity$PlaceholderFragment"/>
 
     <TextView
         android:id="@+id/list_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="texto" />
+        android:text="ANUNCIOS" />
 
 </LinearLayout>

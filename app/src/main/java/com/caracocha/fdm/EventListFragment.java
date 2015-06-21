@@ -2,14 +2,18 @@ package com.caracocha.fdm;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.ListView;
-
+import android.app.Fragment;
 
 import com.caracocha.fdm.dummy.DummyContent;
+
+import java.util.ArrayList;
 
 /**
  * A list fragment representing a list of Events. This fragment
@@ -20,7 +24,11 @@ import com.caracocha.fdm.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
-public class EventListFragment extends ListFragment implements JSONReader.onJSONDownloaded {
+public class EventListFragment extends Fragment implements JSONReader.onJSONDownloaded {
+
+    private RecyclerView rvEventList;
+    private ItemAdapter iaEventList;
+    private ArrayList<Item> alEvents;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -72,23 +80,27 @@ public class EventListFragment extends ListFragment implements JSONReader.onJSON
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+        alEvents = new ArrayList(10);
+        JSONReader jr = new JSONReader(getActivity(), this, "https://www.dropbox.com/s/ekflrytyix82z7g/Eventos.txt?dl=1", alEvents);
+        jr.execute();
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
-        // Restore the previously serialized activated item position.
-        if (savedInstanceState != null
-                && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
-            setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
-        }
+        View rootView = inflater.inflate(R.layout.activity_event_list, container, false);
+        rvEventList = (RecyclerView) rootView.findViewById(R.id.event_list);
+        rvEventList.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        //android.support.v7.widget.GridLayoutManager layoutManager = new android.support.v7.widget.GridLayoutManager(getActivity(), 2);
+        rvEventList.setLayoutManager(layoutManager);
+//            RecyclerView.ItemAnimator animator = quoteRecycler.getItemAnimator();
+//            animator.setAddDuration(2000);
+//            animator.setRemoveDuration(1000);
+        iaEventList = new ItemAdapter(alEvents, getActivity());
+        rvEventList.setAdapter(iaEventList);
+        return rootView;
     }
 
     @Override
@@ -112,43 +124,12 @@ public class EventListFragment extends ListFragment implements JSONReader.onJSON
     }
 
     @Override
-    public void onListItemClick(ListView listView, View view, int position, long id) {
-        super.onListItemClick(listView, view, position, id);
-
-        // Notify the active callbacks interface (the activity, if the
-        // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mActivatedPosition != ListView.INVALID_POSITION) {
             // Serialize and persist the activated item position.
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
-    }
-
-    /**
-     * Turns on activate-on-click mode. When this mode is on, list items will be
-     * given the 'activated' state when touched.
-     */
-    public void setActivateOnItemClick(boolean activateOnItemClick) {
-        // When setting CHOICE_MODE_SINGLE, ListView will automatically
-        // give items the 'activated' state when touched.
-        getListView().setChoiceMode(activateOnItemClick
-                ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
-    }
-
-    private void setActivatedPosition(int position) {
-        if (position == ListView.INVALID_POSITION) {
-            getListView().setItemChecked(mActivatedPosition, false);
-        } else {
-            getListView().setItemChecked(position, true);
-        }
-
-        mActivatedPosition = position;
     }
 
     public void updateLayout() {
