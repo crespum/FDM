@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.app.Fragment;
 
-import com.caracocha.fdm.dummy.DummyContent;
-
 import java.util.ArrayList;
 
 /**
@@ -25,6 +23,8 @@ import java.util.ArrayList;
  * interface.
  */
 public class EventListFragment extends Fragment implements JSONReader.onJSONDownloaded {
+
+    private static final String DEBUG_TAG = "EventListFragment";
 
     private RecyclerView rvEventList;
     private ItemAdapter iaEventList;
@@ -133,6 +133,8 @@ public class EventListFragment extends Fragment implements JSONReader.onJSONDown
     }
 
     public void updateLayout() {
+        Log.d(DEBUG_TAG, "JSON downloaded");
+        iaEventList.notifyDataSetChanged();
 
     }
 }

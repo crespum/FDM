@@ -85,6 +85,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
             alEvents.add(new Item(Item.INFO, context.getResources().getString(R.string.no_events_found)));
         }
 
+        Log.d(DEBUG_TAG, "Number of events:  " + events.length());
         for(int i = 0; i<events.length(); i++) {
             try {
                 obj = events.getJSONObject(i);
@@ -98,19 +99,20 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
                 sLongitude = obj.getString(JSONReader.TAG_LONGITUDE);
                 sDescription = obj.getString(JSONReader.TAG_DESCRIPTION);
 
-                alEvents.add(new Item(Item.DATE, sDay));
+                //alEvents.add(new Item(Item.DATE, sDay));
                 alEvents.add(new Item(sEventName, sDay, sStartTime, sEndTime, sCategory, sPlace, sLatitude, sLongitude, sDescription));
 
                 if (i != events.length() - 1) {
                     sEventName = events.getJSONObject(i + 1).getString("DAY");
                     if (!sDay.equals(sEventName)) {
-                        alEvents.add(new Item(Item.DATE, sEventName));
+                        //alEvents.add(new Item(Item.DATE, sEventName));
                     }
                 }
             } catch (JSONException e) {
                 Log.e(JSONReader.DEBUG_TAG, "Error in getJSONObject\n" + e);
             }
         }
+        Log.d(DEBUG_TAG, "Length of array list: " + alEvents.size());
     }
 
     @Override

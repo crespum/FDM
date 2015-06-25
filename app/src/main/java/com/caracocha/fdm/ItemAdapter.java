@@ -2,6 +2,7 @@ package com.caracocha.fdm;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  * Created by xabi on 6/21/15.
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
+    private static final String DEBUG_TAG = "ItemAdapter";
 
     Context context;
     ArrayList<Item> alItems;
@@ -31,6 +33,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
         Item item = alItems.get(i);
+        Log.d(DEBUG_TAG,"Items: " + alItems.size() + " " + i + " " + item.sTitle + " " + item.sCategory);
         itemViewHolder.tvTitle.setText(item.sTitle);
         itemViewHolder.tvTime.setText(item.sStartTime);
         itemViewHolder.tvPlace.setText(item.sPlace);
