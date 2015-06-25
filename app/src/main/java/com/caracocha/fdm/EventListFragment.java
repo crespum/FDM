@@ -29,6 +29,7 @@ public class EventListFragment extends Fragment implements JSONReader.onJSONDown
     private RecyclerView rvEventList;
     private ItemAdapter iaEventList;
     private ArrayList<Item> alEvents;
+    private LinearLayoutManager layoutManager;
 
     /**
      * The serialization (saved instance state) Bundle key representing the
@@ -89,11 +90,10 @@ public class EventListFragment extends Fragment implements JSONReader.onJSONDown
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.activity_event_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_event_list, container, false);
         rvEventList = (RecyclerView) rootView.findViewById(R.id.event_list);
         rvEventList.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        //android.support.v7.widget.GridLayoutManager layoutManager = new android.support.v7.widget.GridLayoutManager(getActivity(), 2);
+        layoutManager = new LinearLayoutManager(getActivity());
         rvEventList.setLayoutManager(layoutManager);
 //            RecyclerView.ItemAnimator animator = quoteRecycler.getItemAnimator();
 //            animator.setAddDuration(2000);
