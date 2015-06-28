@@ -1,9 +1,12 @@
 package com.caracocha.fdm;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
 /**
@@ -48,9 +51,13 @@ public class EventListActivity extends AppCompatActivity
             //((EventListFragment) getSupportFragmentManager()
             //        .findFragmentById(R.id.event_list))
             //        .setActivateOnItemClick(true);
+        } else {
+            FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
+            fragmenttransaction.replace(R.id.activity_event_list_fragment, new EventListFragment());
+            fragmenttransaction.addToBackStack(null);
+            fragmenttransaction.commit();
         }
 
-        // TODO: If exposing deep links into your app, handle intents here.
     }
 
     /**
@@ -77,6 +84,26 @@ public class EventListActivity extends AppCompatActivity
             Intent detailIntent = new Intent(this, EventDetailActivity.class);
             detailIntent.putExtra(EventDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_bar_main_settings:
+                FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
+                fragmenttransaction.replace(R.id.activity_event_list_fragment, new Preferences());
+                fragmenttransaction.addToBackStack(null);
+                fragmenttransaction.commit();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

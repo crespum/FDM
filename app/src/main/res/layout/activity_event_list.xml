@@ -5,9 +5,8 @@
     android:orientation="vertical"
     tools:context=".EventListActivity">
 
-    <fragment
-        android:id="@+id/fragment_event_list"
-        android:name="com.caracocha.fdm.EventListFragment"
+    <FrameLayout
+        android:id="@+id/activity_event_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" />

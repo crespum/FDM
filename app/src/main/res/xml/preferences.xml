@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_title_about">
+        <Preference
+            android:key="pref_key_version"
+            android:title="@string/pref_title_version" />
+        <Preference
+            android:key="pref_key_share"
+            android:summary="@string/pref_summary_share"
+            android:title="@string/pref_title_share" />
+        <Preference
+            android:summary="@string/pref_summary_contact"
+            android:title="@string/pref_title_contact">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="mailto:acaracocha@gmail.com?subject=[FDM]" />
+        </Preference>
+        <Preference
+            android:summary="@string/pref_summary_seguir"
+            android:title="@string/pref_title_seguir">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://twitter.com/xbcrespo" />
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>
