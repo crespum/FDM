@@ -142,7 +142,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
 
             // Parse JSON
             vReadJSONObject(sJSONStr);
-            Log.d(JSONReader.DEBUG_TAG, "Response: > ".concat(sJSONStr));
+            //Log.d(JSONReader.DEBUG_TAG, "Response: > ".concat(sJSONStr));
         } catch (IOException e) {
             Log.e(JSONReader.DEBUG_TAG, "IOException" + e.toString());
             e.printStackTrace();

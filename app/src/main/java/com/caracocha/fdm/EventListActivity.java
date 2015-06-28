@@ -53,8 +53,8 @@ public class EventListActivity extends AppCompatActivity
             //        .setActivateOnItemClick(true);
         } else {
             FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
-            fragmenttransaction.replace(R.id.activity_event_list_fragment, new EventListFragment());
-            fragmenttransaction.addToBackStack(null);
+            fragmenttransaction.add(R.id.activity_event_list_fragment, new EventListFragment());
+            //fragmenttransaction.addToBackStack(null);
             fragmenttransaction.commit();
         }
 
@@ -84,6 +84,16 @@ public class EventListActivity extends AppCompatActivity
             Intent detailIntent = new Intent(this, EventDetailActivity.class);
             detailIntent.putExtra(EventDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+    //https://stackoverflow.com/questions/29787250/fragment-back-stack-does-not-work-when-extending-appcompatactivity#
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
         }
     }
 
