@@ -18,6 +18,6 @@
     <string name="pref_title_share">Compartir</string>
     <string name="pref_share_content">Coñeces xa a app das Festas do Monte? Búscaa na Play Store #fdmapp http://www.ir.gl/fdm</string>
     <string name="JSON_espera">Agarde por favor…</string>
-    <string name="JSON_not_found">Erro no servizo. Faga click aquí para buscar actualización na Play Store.</string>
+    <string name="JSON_error">Erro no servizo. Faga click aquí para buscar actualización na Play Store.</string>
     <string name="no_events_found">Non se atopou ningún evento</string>
 </resources>

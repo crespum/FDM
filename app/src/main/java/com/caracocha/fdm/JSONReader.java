@@ -70,6 +70,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
         String sPlace;
         String sLatitude;
         String sLongitude;
+        String sNextDay;
 
         JSONObject obj;
 
@@ -77,17 +78,21 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
             events = new JSONArray(sJSON);
         } catch (JSONException e) {
             e.printStackTrace();
-            alEvents.add(new Item(Item.INFO, context.getResources().getString(R.string.JSON_not_found)));
+            alEvents.add(new Item(Item.INFO, context.getResources().getString(R.string.JSON_error)));
             return;
         }
 
         if (events.length() == 0) {
             alEvents.add(new Item(Item.INFO, context.getResources().getString(R.string.no_events_found)));
+            return;
         }
 
         Log.d(DEBUG_TAG, "Number of events:  " + events.length());
-        for(int i = 0; i<events.length(); i++) {
-            try {
+        try {
+            // The first card indicates a DAY
+            alEvents.add(new Item(Item.DAY, events.getJSONObject(0).getString(JSONReader.TAG_DAY)));
+
+            for (int i = 0; i < events.length(); i++) {
                 obj = events.getJSONObject(i);
                 sEventName = obj.getString(JSONReader.TAG_EVENT_NAME);
                 sDay = obj.getString(JSONReader.TAG_DAY);
@@ -99,18 +104,18 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
                 sLongitude = obj.getString(JSONReader.TAG_LONGITUDE);
                 sDescription = obj.getString(JSONReader.TAG_DESCRIPTION);
 
-                //alEvents.add(new Item(Item.DATE, sDay));
                 alEvents.add(new Item(sEventName, sDay, sStartTime, sEndTime, sCategory, sPlace, sLatitude, sLongitude, sDescription));
 
                 if (i != events.length() - 1) {
-                    sEventName = events.getJSONObject(i + 1).getString("DAY");
-                    if (!sDay.equals(sEventName)) {
-                        //alEvents.add(new Item(Item.DATE, sEventName));
+                    sNextDay = events.getJSONObject(i + 1).getString("DAY");
+                    if (!sDay.equals(sNextDay)) {
+                        alEvents.add(new Item(Item.DAY, sNextDay));
                     }
                 }
-            } catch (JSONException e) {
-                Log.e(JSONReader.DEBUG_TAG, "Error in getJSONObject\n" + e);
             }
+        } catch (JSONException e) {
+            Log.e(JSONReader.DEBUG_TAG, "Error in getJSONObject\n" + e);
+            alEvents.add(new Item(Item.INFO, context.getResources().getString(R.string.JSON_error)));
         }
         Log.d(DEBUG_TAG, "Length of array list: " + alEvents.size());
     }

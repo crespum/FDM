@@ -2,10 +2,8 @@ package com.caracocha.fdm;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-
-import java.util.ArrayList;
+import android.support.v7.app.AppCompatActivity;
 
 
 /**
@@ -24,7 +22,7 @@ import java.util.ArrayList;
  * {@link EventListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class EventListActivity extends FragmentActivity
+public class EventListActivity extends AppCompatActivity
         implements EventListFragment.Callbacks {
 
     /**

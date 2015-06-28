@@ -5,9 +5,14 @@ package com.caracocha.fdm;
  */
 public class Item {
 
-    static final String DATE = "0";
-    static final String INFO = "1";
-    static final String EVENT = "3";
+    public static final String DAY = "DAY";
+    public static final int iDAY = 0;
+    public static final String INFO = "INFO";
+    public static final int iINFO = 1;
+    public static final String EVENT = "EVENT";
+    public static final int iEVENT = 2;
+    public static final String AD = "AD";
+    public static final int iAD = 3;
 
     String sType;
     String sTitle;

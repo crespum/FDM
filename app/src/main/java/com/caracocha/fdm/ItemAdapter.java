@@ -24,45 +24,63 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     }
 
     @Override
-    public ItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int iViewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View view = inflater.inflate(R.layout.event_item, viewGroup, false);
-        return new ItemViewHolder(view);
+        View view = null;
+        switch (iViewType) {
+            case Item.iEVENT:
+                view = inflater.inflate(R.layout.item_event, viewGroup, false);
+                break;
+            case Item.iDAY:
+                view = inflater.inflate(R.layout.item_day, viewGroup, false);
+                break;
+            case Item.iINFO:
+                view = inflater.inflate(R.layout.item_info, viewGroup, false);
+                break;
+            default:
+                break;
+        }
+        return new ItemViewHolder(view, iViewType);
     }
 
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
         Item item = alItems.get(i);
-        Log.d(DEBUG_TAG,"Items: " + alItems.size() + " " + i + " " + item.sTitle + " " + item.sCategory);
-        itemViewHolder.tvTitle.setText(item.sTitle);
-        itemViewHolder.tvTime.setText(item.sStartTime);
-        itemViewHolder.tvPlace.setText(item.sPlace);
-        itemViewHolder.ivEvent.setImageResource(context.getResources().getIdentifier(item.sCategory.toLowerCase(), "drawable", context.getPackageName()));
+        switch (getItemViewType(i)) {
+            case Item.iEVENT:
+                itemViewHolder.tvTitle.setText(item.sTitle);
+                itemViewHolder.tvTime.setText(item.sStartTime);
+                itemViewHolder.tvPlace.setText(item.sPlace);
+                itemViewHolder.ivEvent.setImageResource(context.getResources().getIdentifier(item.sCategory.toLowerCase(), "drawable", context.getPackageName()));
+                break;
+            case Item.iDAY:
+                itemViewHolder.tvDay.setText(item.sMessage);
+                break;
+            case Item.iINFO:
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        String sType = alItems.get(position).sType;
+        if (sType == Item.EVENT) {
+            return Item.iEVENT;
+        } else if (sType == Item.DAY) {
+            return Item.iDAY;
+        } else if (sType == Item.INFO) {
+            return Item.iINFO;
+        } else if (sType == Item.AD) {
+            return Item.iAD;
+        } else {
+            return -1;
+        }
     }
 
     @Override
     public int getItemCount() {
         return alItems.size();
     }
-
-    public void addOrUpdateItem(Item q) {
-        int pos = alItems.indexOf(q);
-        if (pos >= 0) {
-            updateItem(q, pos);
-        } else {
-            addItem(q);
-        }
-    }
-
-    private void updateItem(Item q, int pos) {
-        alItems.remove(pos);
-        notifyItemRemoved(pos);
-        addItem(q);
-    }
-
-    private void addItem(Item q) {
-        alItems.add(q);
-        notifyItemInserted(alItems.size() - 1);
-    }
-
 }

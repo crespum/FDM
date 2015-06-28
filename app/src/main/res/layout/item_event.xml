@@ -19,21 +19,22 @@
 
             <ImageView
                 android:src="@drawable/fire"
-                android:id="@+id/item_Image"
+                android:id="@+id/item_event_image"
                 android:layout_width="?android:listPreferredItemHeight"
-                android:layout_height="fill_parent"
+                android:layout_height="?android:listPreferredItemHeight"
+                android:layout_marginRight="9.0dip"
+
                 android:padding="1.0dip" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:orientation="vertical"
-                android:paddingLeft="9.0dip">
+                android:orientation="vertical">
 
                 <TextView
                     android:text="Title"
-                    android:id="@+id/item_Title"
+                    android:id="@+id/item_event_title"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -42,16 +43,17 @@
 
                 <TextView
                     android:text="Time"
-                    android:id="@+id/item_Time"
+                    android:id="@+id/item_event_time"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="right"
                     android:singleLine="true"
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textIsSelectable="false" />
 
                 <TextView
                     android:text="place"
-                    android:id="@+id/item_Place"
+                    android:id="@+id/item_event_place"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
