@@ -82,7 +82,7 @@ public class EventListFragment extends Fragment implements JSONReader.onJSONDown
         super.onCreate(savedInstanceState);
 
         alEvents = new ArrayList(10);
-        JSONReader jr = new JSONReader(getActivity(), this, "https://www.dropbox.com/s/ekflrytyix82z7g/Eventos.txt?dl=1", alEvents);
+        JSONReader jr = new JSONReader(getActivity(), this, "https://www.dropbox.com/s/8uiguzxotazjecd/proba.txt?dl=1", alEvents);
         jr.execute();
     }
 
