@@ -10,7 +10,7 @@ import android.widget.TextView;
 /**
  * Created by xabi on 6/21/15.
  */
-public class ItemViewHolder extends RecyclerView.ViewHolder {
+public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private static final String DEBUG_TAG = "ItemViewHolder";
 
     // EVENT item
@@ -29,6 +29,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         switch (iViewType) {
             case Item.iEVENT:
+                itemView.setOnClickListener(this);
                 ivEvent = (ImageView) itemView.findViewById(R.id.item_event_image);
                 tvTitle = (TextView) itemView.findViewById(R.id.item_event_title);
                 tvTime = (TextView) itemView.findViewById(R.id.item_event_time);
@@ -45,5 +46,10 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
             default:
                 Log.d(DEBUG_TAG, "Wrong iViewType (" + iViewType + ")");
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.d(DEBUG_TAG, tvTitle.getText() + " clicked");
     }
 }

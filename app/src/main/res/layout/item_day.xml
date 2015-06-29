@@ -1,26 +1,21 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="4dp">
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        card_view:cardCornerRadius="4dp">
-
-        <TextView
-            android:id="@+id/item_day_day"
-            android:layout_width="fill_parent"
-            android:layout_height="40dp"
-            android:padding="9dip"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textColor="@color/bright_foreground_material_dark"
-            android:text="Error"
-            android:background="@drawable/day_background"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textIsSelectable="false" />
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+    <TextView
+        android:id="@+id/item_day_day"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/day_background"
+        android:gravity="center"
+        android:padding="9dip"
+        android:text="Error"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="@color/bright_foreground_material_dark"
+        android:textIsSelectable="false"
+        android:textStyle="bold" />
+</android.support.v7.widget.CardView>
