@@ -46,6 +46,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int i) {
         Item item = alItems.get(i);
+        itemViewHolder.iPos = i;
         switch (getItemViewType(i)) {
             case Item.iEVENT:
                 itemViewHolder.tvTitle.setText(item.sTitle);

@@ -1,10 +1,10 @@
 package com.caracocha.fdm;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.app.Fragment;
 
 /**
  * A fragment representing a single Event detail screen.
@@ -13,11 +13,7 @@ import android.view.ViewGroup;
  * on handsets.
  */
 public class EventDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
+    private Item event;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -30,12 +26,6 @@ public class EventDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments().containsKey(ARG_ITEM_ID)) {
-            // Load the dummy content specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load content from a content provider.
-            //mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
-        }
     }
 
     @Override

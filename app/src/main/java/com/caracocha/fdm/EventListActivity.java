@@ -22,11 +22,11 @@ import android.view.MenuItem;
  * (if present) is a {@link EventDetailFragment}.
  * <p/>
  * This activity also implements the required
- * {@link EventListFragment.Callbacks} interface
+ * {@link com.caracocha.fdm.EventListFragment.onItemReceivedListener} interface
  * to listen for item selections.
  */
 public class EventListActivity extends AppCompatActivity
-        implements EventListFragment.Callbacks {
+        implements EventListFragment.onItemReceivedListener {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -61,29 +61,21 @@ public class EventListActivity extends AppCompatActivity
     }
 
     /**
-     * Callback method from {@link EventListFragment.Callbacks}
+     * Callback method from {@link EventListFragment.onItemReceivedListener}
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemReceived(Item event) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putString(EventDetailFragment.ARG_ITEM_ID, id);
-            EventDetailFragment fragment = new EventDetailFragment();
-            fragment.setArguments(arguments);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.event_detail_container, fragment)
-                    .commit();
 
         } else {
-            // In single-pane mode, simply start the detail activity
-            // for the selected item ID.
-            Intent detailIntent = new Intent(this, EventDetailActivity.class);
-            detailIntent.putExtra(EventDetailFragment.ARG_ITEM_ID, id);
-            startActivity(detailIntent);
+            FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
+            fragmenttransaction.replace(R.id.activity_event_list_fragment, new EventDetailFragment());
+            fragmenttransaction.addToBackStack(null);
+            fragmenttransaction.commit();
         }
     }
 

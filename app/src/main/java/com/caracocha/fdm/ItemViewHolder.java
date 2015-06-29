@@ -12,6 +12,9 @@ import android.widget.TextView;
  */
 public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private static final String DEBUG_TAG = "ItemViewHolder";
+    public onItemClickListener ifItemClick;
+    // Contains the position inside alEvents
+    public int iPos;
 
     // EVENT item
     protected ImageView ivEvent;
@@ -50,6 +53,11 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View view) {
+        ifItemClick.onItemClick(iPos);
         Log.d(DEBUG_TAG, tvTitle.getText() + " clicked");
+    }
+
+    public interface onItemClickListener {
+        void onItemClick(int iPos);
     }
 }

@@ -1,5 +1,166 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:id="@+id/event_detail"
-    style="?android:attr/textAppearanceLarge" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:padding="16dp" android:textIsSelectable="true"
-    tools:context=".EventDetailFragment" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/fragment_event_detail_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/a_guarda" />
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:id="@+id/fragment_event_detail_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="9dip"
+            android:text="Evento"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textIsSelectable="false"
+            android:textStyle="bold" />
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="6"
+            card_view:cardCornerRadius="4dp">
+
+            <TextView
+                android:id="@+id/fragment_event_detail_place"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="9dip"
+                android:text="Lugar"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            card_view:cardCornerRadius="4dp">
+
+            <ImageView
+                android:id="@+id/fragment_event_detail_map"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:src="@mipmap/map" />
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            card_view:cardCornerRadius="4dp">
+
+            <TextView
+                android:id="@+id/fragment_event_detail_day"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="9dip"
+                android:text="18:00"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="3"
+            card_view:cardCornerRadius="4dp">
+
+            <TextView
+                android:id="@+id/fragment_event_detail_time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="9dip"
+                android:text="1/2/2015"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            card_view:cardCornerRadius="4dp">
+
+            <ImageView
+                android:id="@+id/fragment_event_detail_web"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:src="@mipmap/web" />
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:id="@+id/fragment_event_detail_price"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="9dip"
+            android:text="Gratis"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textIsSelectable="false" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:id="@+id/fragment_event_detail_details"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="9dip"
+            android:text="Gratis"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textIsSelectable="false" />
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

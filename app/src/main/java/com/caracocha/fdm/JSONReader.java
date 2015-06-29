@@ -38,20 +38,20 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
     private ArrayList alEvents;
     private Context context;
     JSONArray events;
-    onJSONDownloaded ifJSON;
     private ProgressDialog pDialog;
     private String sJSONStr;
     private String sURL;
 
-    interface onJSONDownloaded {
-        void updateLayout();
+    onJSONDownloadListener ifJSON;
+
+    interface onJSONDownloadListener {
+        void onJSONDownload();
     }
 
-    public JSONReader(Context context, onJSONDownloaded ifJSON, String sURL, ArrayList alEvents) {
+    public JSONReader(Context context, String sURL, ArrayList alEvents) {
         this.context = context;
         this.sURL = sURL;
         this.alEvents = alEvents;
-        this.ifJSON = ifJSON;
     }
 
     /**
@@ -158,7 +158,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
         if (pDialog.isShowing()) {
             pDialog.dismiss();
         }
-        ifJSON.updateLayout();
+        ifJSON.onJSONDownload();
     }
 
     @Override
