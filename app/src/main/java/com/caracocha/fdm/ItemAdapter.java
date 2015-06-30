@@ -36,6 +36,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
             case Item.iDAY:
                 view = inflater.inflate(R.layout.item_day, viewGroup, false);
                 break;
+            case Item.iMONTH:
+                view = inflater.inflate(R.layout.item_day, viewGroup, false);
+                break;
             case Item.iINFO:
                 view = inflater.inflate(R.layout.item_info, viewGroup, false);
                 break;
@@ -59,7 +62,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
             case Item.iDAY:
                 itemViewHolder.tvDay.setText(item.sMessage);
                 break;
+            case Item.iMONTH:
+                itemViewHolder.tvDay.setText(item.sMessage);
+                break;
             case Item.iINFO:
+                // TODO Create info cards
                 break;
             default:
                 break;
@@ -73,6 +80,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
             return Item.iEVENT;
         } else if (sType == Item.DAY) {
             return Item.iDAY;
+        } else if (sType == Item.MONTH) {
+            return Item.iMONTH;
         } else if (sType == Item.INFO) {
             return Item.iINFO;
         } else if (sType == Item.AD) {

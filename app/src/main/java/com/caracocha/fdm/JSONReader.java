@@ -26,7 +26,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
 
     private static final String DEBUG_TAG = "ReaderJSON";
     private static final String TAG_EVENT_NAME = "EVENT_NAME";
-    private static final String TAG_DAY = "DAY";
+    private static final String TAG_DAY = "DAY";  // Actually a date with format dd/MM/yyyy
     private static final String TAG_START_TIME = "START_TIME";
     private static final String TAG_END_TIME = "END_TIME";
     private static final String TAG_CATEGORY = "CATEGORY";
@@ -34,6 +34,10 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
     private static final String TAG_LATITUDE = "LATITUDE";
     private static final String TAG_LONGITUDE = "LONGITUDE";
     private static final String TAG_DESCRIPTION = "DESCRIPTION";
+    // New fields
+    private static final String TAG_PRICE = "PRICE";
+    private static final String TAG_HEADER_IMG = "HEADER_IMG";
+    private static final String TAG_EVENT_URL = "EVENT_URL";
 
     private ArrayList alEvents;
     private Context context;
@@ -63,7 +67,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
      */
     private void vReadJSONObject(String sJSON) {
         String sEventName;
-        String sDay;
+        String sDate;
         String sStartTime;
         String sEndTime;
         String sCategory;
@@ -71,7 +75,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
         String sPlace;
         String sLatitude;
         String sLongitude;
-        String sNextDay;
+        String sNextDate;
 
         JSONObject obj;
 
@@ -90,13 +94,14 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
 
         Log.d(DEBUG_TAG, "Number of events:  " + events.length());
         try {
-            // The first card indicates a DAY
+            // The first card indicates the  MONTH and the second the DAY
+            alEvents.add(new Item(Item.MONTH, events.getJSONObject(0).getString(JSONReader.TAG_DAY)));
             alEvents.add(new Item(Item.DAY, events.getJSONObject(0).getString(JSONReader.TAG_DAY)));
 
             for (int i = 0; i < events.length(); i++) {
                 obj = events.getJSONObject(i);
                 sEventName = obj.getString(JSONReader.TAG_EVENT_NAME);
-                sDay = obj.getString(JSONReader.TAG_DAY);
+                sDate = obj.getString(JSONReader.TAG_DAY);
                 sStartTime = obj.getString(JSONReader.TAG_START_TIME);
                 sEndTime = obj.getString(JSONReader.TAG_END_TIME);
                 sCategory = obj.getString(JSONReader.TAG_CATEGORY);
@@ -105,12 +110,16 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
                 sLongitude = obj.getString(JSONReader.TAG_LONGITUDE);
                 sDescription = obj.getString(JSONReader.TAG_DESCRIPTION);
 
-                alEvents.add(new Item(sEventName, sDay, sStartTime, sEndTime, sCategory, sPlace, sLatitude, sLongitude, sDescription));
+                alEvents.add(new Item(sEventName, sDate, sStartTime, sEndTime, sCategory, sPlace, sLatitude, sLongitude, sDescription));
 
                 if (i != events.length() - 1) {
-                    sNextDay = events.getJSONObject(i + 1).getString("DAY");
-                    if (!sDay.equals(sNextDay)) {
-                        alEvents.add(new Item(Item.DAY, sNextDay));
+                    sNextDate = events.getJSONObject(i + 1).getString("DAY");
+                    // Compare month dd/MM/yyyy
+                    if (!sDate.substring(3).equals(sNextDate.substring(3))) {
+                        alEvents.add(new Item(Item.MONTH, sNextDate));
+                    }
+                    if (!sDate.equals(sNextDate)) {
+                        alEvents.add(new Item(Item.DAY, sNextDate));
                     }
                 }
             }

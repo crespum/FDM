@@ -22,6 +22,8 @@ public class Item implements Parcelable {
     public static final int iEVENT = 2;
     public static final String AD = "AD";
     public static final int iAD = 3;
+    public static final String MONTH = "MONTH";
+    public static final int iMONTH = 4;
 
     String sType;
     String sTitle;
@@ -53,6 +55,9 @@ public class Item implements Parcelable {
         if (sType.equals(Item.DAY)) {
             Calendar c = parseDate(sMessage);
             this.sMessage = getDay(c) + " " + c.get(Calendar.DAY_OF_MONTH);
+        } else if (sType.equals(Item.MONTH)) {
+            Calendar c = parseDate(sMessage);
+            this.sMessage = getMonth(c) + " " + c.get(Calendar.YEAR);
         } else {
             this.sMessage = sMessage;
         }
@@ -103,6 +108,7 @@ public class Item implements Parcelable {
 
     /**
      * Get the month name from parsing sDate
+     *
      * @param c Calendar with the date to be parsed
      */
     private String getMonth(Calendar c) {
@@ -140,6 +146,7 @@ public class Item implements Parcelable {
 
     /**
      * Get the month name from parsing a calendar
+     *
      * @param c Calendar with the date to be parsed
      */
     private String getDay(Calendar c) {

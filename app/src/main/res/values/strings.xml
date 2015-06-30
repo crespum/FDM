@@ -12,7 +12,7 @@
     <string name="pref_title_about">Sobre FDM</string>
     <string name="pref_summary_seguir">Seguir a @xbcrespo en Twitter</string>
     <string name="pref_title_seguir">Seguir</string>
-    <string name="pref_summary_contact">Enviar un email ao autor</string>
+    <string name="pref_summary_contact">Desexa engadir un novo evento?</string>
     <string name="pref_title_contact">Contactar</string>
     <string name="pref_summary_share">Comparte esta app cos teus amigos</string>
     <string name="pref_title_share">Compartir</string>

@@ -10,7 +10,7 @@
         android:id="@+id/item_day_day"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:background="@drawable/day_background"
+        android:background="#7DB4B5"
         android:gravity="center"
         android:padding="9dip"
         android:text="Error"
