@@ -1,5 +1,6 @@
 package com.caracocha.fdm;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,10 +26,63 @@ public class EventListFragment extends Fragment implements
     private LinearLayoutManager layoutManager;
 
     onItemReceivedListener ifItemReceived;
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public EventListFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        alEvents = new ArrayList(10);
+        JSONReader jr = new JSONReader(getActivity(), this, "https://www.dropbox.com/s/8uiguzxotazjecd/proba.txt?dl=1", alEvents);
+        jr.execute();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.fragment_event_list, container, false);
+        rvEventList = (RecyclerView) rootView.findViewById(R.id.event_list);
+        rvEventList.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity());
+        rvEventList.setLayoutManager(layoutManager);
+        iaEventList = new ItemAdapter(alEvents, getActivity(), this);
+        rvEventList.setAdapter(iaEventList);
+        return rootView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // Activities containing this fragment must implement its callbacks.
+        if (!(activity instanceof onItemReceivedListener)) {
+            throw new IllegalStateException("Activity must implement fragment's callbacks.");
+        }
+
+        ifItemReceived = (onItemReceivedListener) activity;
+    }
+
+    /**
+     * Interface for JSONReader (refreshes the view when the download finishes)
+     */
+    public void onJSONDownload() {
+        Log.d(DEBUG_TAG, "JSON downloaded");
+        iaEventList.notifyDataSetChanged();
+
+    }
+
     /**
      * Interface for the ItemViewHolder class. After the fragment is notified that an item
      * has been selected, the activity is notified to start the a different fragment containing
      * the details.
+     *
      * @param iPos index of {@link Item} alEvents corresponding to the clicked element
      */
     @Override
@@ -43,40 +97,4 @@ public class EventListFragment extends Fragment implements
         void onItemReceived(Item item);
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public EventListFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        alEvents = new ArrayList(10);
-        JSONReader jr = new JSONReader(getActivity(), "https://www.dropbox.com/s/8uiguzxotazjecd/proba.txt?dl=1", alEvents);
-        jr.execute();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.fragment_event_list, container, false);
-        rvEventList = (RecyclerView) rootView.findViewById(R.id.event_list);
-        rvEventList.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getActivity());
-        rvEventList.setLayoutManager(layoutManager);
-        iaEventList = new ItemAdapter(alEvents, getActivity());
-        rvEventList.setAdapter(iaEventList);
-        return rootView;
-    }
-
-    // Interface for JSONReader (refreshes the view when the download finishes)
-    public void onJSONDownload() {
-        Log.d(DEBUG_TAG, "JSON downloaded");
-        iaEventList.notifyDataSetChanged();
-
-    }
 }

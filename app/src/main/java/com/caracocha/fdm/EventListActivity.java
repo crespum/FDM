@@ -1,7 +1,7 @@
 package com.caracocha.fdm;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +11,7 @@ import android.view.MenuItem;
 
 /**
  * An activity representing a list of Events. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link EventDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
+ * has different presentations for handset and tablet-size devices.
  * <p/>
  * The activity makes heavy use of fragments. The list of items is a
  * {@link EventListFragment} and the item details
@@ -27,6 +23,8 @@ import android.view.MenuItem;
  */
 public class EventListActivity extends AppCompatActivity
         implements EventListFragment.onItemReceivedListener {
+
+    private static final String DEBUG_TAG = "EventListActivity";
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -72,8 +70,13 @@ public class EventListActivity extends AppCompatActivity
             // fragment transaction.
 
         } else {
+            Log.d(DEBUG_TAG, "Begin fragment transaction");
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("event", event);
+            Fragment fragment = new EventDetailFragment();
+            fragment.setArguments(bundle);
             FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
-            fragmenttransaction.replace(R.id.activity_event_list_fragment, new EventDetailFragment());
+            fragmenttransaction.replace(R.id.activity_event_list_fragment, fragment);
             fragmenttransaction.addToBackStack(null);
             fragmenttransaction.commit();
         }

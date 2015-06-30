@@ -1,5 +1,7 @@
 package com.caracocha.fdm;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -9,7 +11,7 @@ import java.util.Calendar;
 /**
  * Created by xabi on 6/20/15.
  */
-public class Item {
+public class Item implements Parcelable {
     private static String DEBUG_TAG = "ITEM";
 
     public static final String DAY = "DAY";
@@ -32,6 +34,8 @@ public class Item {
     String sLongitude;
     String sDescription;
 
+    // Not yet implemented
+    String sPrice;
     String sImgURL;
     String sEventURL;
 
@@ -159,4 +163,66 @@ public class Item {
                 return "Error";
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.sType);
+        dest.writeString(this.sTitle);
+        dest.writeString(this.sDate);
+        dest.writeString(this.sStartTime);
+        dest.writeString(this.sEndTime);
+        dest.writeString(this.sCategory);
+        dest.writeString(this.sPlace);
+        dest.writeString(this.sLatitude);
+        dest.writeString(this.sLongitude);
+        dest.writeString(this.sDescription);
+        dest.writeString(this.sPrice);
+        dest.writeString(this.sImgURL);
+        dest.writeString(this.sEventURL);
+        dest.writeString(this.sItemDay);
+        dest.writeString(this.sWeekDay);
+        dest.writeInt(this.iDay);
+        dest.writeString(this.sMonth);
+        dest.writeInt(this.iMonth);
+        dest.writeInt(this.iYear);
+        dest.writeString(this.sMessage);
+    }
+
+    protected Item(Parcel in) {
+        this.sType = in.readString();
+        this.sTitle = in.readString();
+        this.sDate = in.readString();
+        this.sStartTime = in.readString();
+        this.sEndTime = in.readString();
+        this.sCategory = in.readString();
+        this.sPlace = in.readString();
+        this.sLatitude = in.readString();
+        this.sLongitude = in.readString();
+        this.sDescription = in.readString();
+        this.sPrice = in.readString();
+        this.sImgURL = in.readString();
+        this.sEventURL = in.readString();
+        this.sItemDay = in.readString();
+        this.sWeekDay = in.readString();
+        this.iDay = in.readInt();
+        this.sMonth = in.readString();
+        this.iMonth = in.readInt();
+        this.iYear = in.readInt();
+        this.sMessage = in.readString();
+    }
+
+    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+        public Item createFromParcel(Parcel source) {
+            return new Item(source);
+        }
+
+        public Item[] newArray(int size) {
+            return new Item[size];
+        }
+    };
 }

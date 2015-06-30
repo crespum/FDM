@@ -28,8 +28,9 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     // INFO item
     protected TextView tvInfo;
 
-    public ItemViewHolder(View itemView, int iViewType) {
+    public ItemViewHolder(View itemView, int iViewType, onItemClickListener ifItemClick) {
         super(itemView);
+        this.ifItemClick = ifItemClick;
         switch (iViewType) {
             case Item.iEVENT:
                 itemView.setOnClickListener(this);

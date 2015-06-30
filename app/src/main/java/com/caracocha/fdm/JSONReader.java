@@ -48,7 +48,8 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
         void onJSONDownload();
     }
 
-    public JSONReader(Context context, String sURL, ArrayList alEvents) {
+    public JSONReader(Context context, onJSONDownloadListener ifJSON, String sURL, ArrayList alEvents) {
+        this.ifJSON = ifJSON;
         this.context = context;
         this.sURL = sURL;
         this.alEvents = alEvents;

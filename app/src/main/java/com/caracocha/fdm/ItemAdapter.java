@@ -15,12 +15,14 @@ import java.util.ArrayList;
 public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     private static final String DEBUG_TAG = "ItemAdapter";
 
-    Context context;
-    ArrayList<Item> alItems;
+    private ArrayList<Item> alItems;
+    private Context context;
+    private ItemViewHolder.onItemClickListener ifItemClick;
 
-    public ItemAdapter(ArrayList alItems, Context context) {
+    public ItemAdapter(ArrayList alItems, Context context, ItemViewHolder.onItemClickListener ifItemClick) {
         this.alItems = alItems;
         this.context = context;
+        this.ifItemClick = ifItemClick;
     }
 
     @Override
@@ -40,7 +42,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
             default:
                 break;
         }
-        return new ItemViewHolder(view, iViewType);
+        return new ItemViewHolder(view, iViewType, ifItemClick);
     }
 
     @Override
