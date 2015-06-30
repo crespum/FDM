@@ -38,6 +38,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
     private static final String TAG_PRICE = "PRICE";
     private static final String TAG_HEADER_IMG = "HEADER_IMG";
     private static final String TAG_EVENT_URL = "EVENT_URL";
+    private static final String TAG_TYPE = "TYPE"; // EVENT, INFO or AD
 
     private ArrayList alEvents;
     private Context context;

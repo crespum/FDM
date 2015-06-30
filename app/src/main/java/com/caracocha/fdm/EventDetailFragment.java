@@ -54,7 +54,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         tvPlace.setText(event.sPlace);
         CardView cvMap = (CardView) rootView.findViewById(R.id.fragment_event_detail_map);
         if(event.sLatitude != "-1" && event.sLongitude != "-1") {
-            cvMap.setOnClickListener(this);
+            cvMap.setOnClickListener(this); // TODO
         } else {
             cvMap.setVisibility(View.GONE);
         }
