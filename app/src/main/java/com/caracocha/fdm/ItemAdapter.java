@@ -57,7 +57,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
                 itemViewHolder.tvTitle.setText(item.sTitle);
                 itemViewHolder.tvTime.setText(item.sStartTime);
                 itemViewHolder.tvPlace.setText(item.sPlace);
-                itemViewHolder.ivEvent.setImageResource(context.getResources().getIdentifier(item.sCategory.toLowerCase(), "drawable", context.getPackageName()));
+                int imgCategory = context.getResources().getIdentifier(item.sCategory.toLowerCase(), "drawable", context.getPackageName());
+                if (imgCategory != 0)
+                    itemViewHolder.ivEvent.setImageResource(imgCategory);
                 break;
             case Item.iDAY:
                 itemViewHolder.tvDay.setText(item.sMessage);

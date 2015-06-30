@@ -36,7 +36,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="Title"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:textIsSelectable="false" />
 
@@ -45,7 +44,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="Time"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textIsSelectable="false" />
 
@@ -54,7 +52,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="place"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textIsSelectable="false" />
         </LinearLayout>

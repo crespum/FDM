@@ -1,19 +1,26 @@
 package com.caracocha.fdm;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A fragment representing a single Event detail screen.
  * This fragment is either contained in a {@link EventListActivity}
  */
-public class EventDetailFragment extends Fragment {
+public class EventDetailFragment extends Fragment implements View.OnClickListener {
+    private static final String DEBUG_TAG = "EventDetailFragment";
+
     private Item event;
 
     /**
@@ -34,25 +41,57 @@ public class EventDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event_detail, container, false);
-        //ImageView ivHeader = (ImageView) rootView.findViewById(R.id.fragment_event_detail_header);
+        int imgHeaderID = getActivity().getResources().getIdentifier("header_" + event.sCategory.toLowerCase(), "drawable", getActivity().getPackageName());
+        Log.d(DEBUG_TAG, "Searching for " + "header_" + event.sCategory.toLowerCase() + ".jpg -- Res: " + imgHeaderID);
+        if (imgHeaderID != 0) {
+            ImageView ivHeader = (ImageView) rootView.findViewById(R.id.fragment_event_detail_header);
+            ivHeader.setImageResource(imgHeaderID);
+        }
         TextView tvTitle = (TextView) rootView.findViewById(R.id.fragment_event_detail_title);
         tvTitle.setText(event.sTitle);
 
         TextView tvPlace = (TextView) rootView.findViewById(R.id.fragment_event_detail_place);
         tvPlace.setText(event.sPlace);
         CardView cvMap = (CardView) rootView.findViewById(R.id.fragment_event_detail_map);
+        if(event.sLatitude != "-1" && event.sLongitude != "-1") {
+            cvMap.setOnClickListener(this);
+        } else {
+            cvMap.setVisibility(View.GONE);
+        }
 
         TextView tvTime = (TextView) rootView.findViewById(R.id.fragment_event_detail_time);
         tvTime.setText(event.sStartTime);
         TextView tvDate = (TextView) rootView.findViewById(R.id.fragment_event_detail_date);
         tvDate.setText(event.sDate);
         CardView cvWeb = (CardView) rootView.findViewById(R.id.fragment_event_detail_web);
+        if (event.sEventURL != "-1") {
+            cvWeb.setOnClickListener(this);
+        } else {
+            cvWeb.setVisibility(View.GONE);
+        }
 
-        TextView tvPrice = (TextView) rootView.findViewById(R.id.fragment_event_detail_price);
+        if (event.sPrice != "-1") {
+            TextView tvPrice = (TextView) rootView.findViewById(R.id.fragment_event_detail_price);
+            tvPrice.setText(event.sPrice);
+        }
 
-        TextView tvDetails = (TextView) rootView.findViewById(R.id.fragment_event_detail_details);
-        tvDetails.setText(event.sDescription);
-
+        if (event.sDescription != "-1") {
+            TextView tvDetails = (TextView) rootView.findViewById(R.id.fragment_event_detail_details);
+            tvDetails.setText(event.sDescription);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent = new Intent("android.intent.action.VIEW",
+                Uri.parse((new StringBuilder("geo:0,0?q=")).append(event.sLatitude).append(",").append(event.sLongitude).append("(").
+                                append(event.sPlace).append(")").toString()));
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getActivity(), R.string.no_maps_app, Toast.LENGTH_LONG).show();
+            Log.e(DEBUG_TAG, "Install a maps application");
+        }
     }
 }

@@ -3,6 +3,9 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?android:selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:layout_margin="5dp"
     card_view:cardCornerRadius="4dp">
 
@@ -19,14 +22,15 @@
             android:layout_height="?android:listPreferredItemHeight"
             android:layout_marginRight="9.0dip"
             android:padding="1.0dip"
-            android:src="@drawable/fire" />
+            android:src="@drawable/warning" />
 
         <TextView
             android:id="@+id/item_info_text"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:text="Title"
-            android:textAppearance="?android:textAppearanceMedium"
+            android:text="@string/item_info"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:textAppearanceSmall"
             android:textIsSelectable="false" />
 
     </LinearLayout>
