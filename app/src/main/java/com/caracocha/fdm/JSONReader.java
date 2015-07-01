@@ -36,8 +36,8 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
     private static final String TAG_DESCRIPTION = "DESCRIPTION";
     // New fields
     private static final String TAG_PRICE = "PRICE";
-    private static final String TAG_HEADER_IMG = "HEADER_IMG";
-    private static final String TAG_EVENT_URL = "EVENT_URL";
+    private static final String TAG_IMG_URL = "IMG_URL";
+    private static final String TAG_URL = "URL";
     private static final String TAG_TYPE = "TYPE"; // EVENT, INFO or AD
 
     private ArrayList alEvents;
@@ -67,16 +67,20 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
      * @param sJSON
      */
     private void vReadJSONObject(String sJSON) {
-        String sEventName;
-        String sDate;
-        String sStartTime;
-        String sEndTime;
-        String sCategory;
-        String sDescription;
-        String sPlace;
-        String sLatitude;
-        String sLongitude;
-        String sNextDate;
+        String sType = null;
+        String sTitle = null;
+        String sDate = null;
+        String sStartTime = null;
+        String sEndTime = null;
+        String sCategory = null;
+        String sDescription = null;
+        String sPlace = null;
+        String sLatitude = null;
+        String sLongitude = null;
+        String sNextDate = null;
+        String sPrice = null;
+        String sImgURL = null;
+        String sURL = null;
 
         JSONObject obj;
 
@@ -101,17 +105,41 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
 
             for (int i = 0; i < events.length(); i++) {
                 obj = events.getJSONObject(i);
-                sEventName = obj.getString(JSONReader.TAG_EVENT_NAME);
-                sDate = obj.getString(JSONReader.TAG_DAY);
-                sStartTime = obj.getString(JSONReader.TAG_START_TIME);
-                sEndTime = obj.getString(JSONReader.TAG_END_TIME);
-                sCategory = obj.getString(JSONReader.TAG_CATEGORY);
-                sPlace = obj.getString(JSONReader.TAG_PLACE);
-                sLatitude = obj.getString(JSONReader.TAG_LATITUDE);
-                sLongitude = obj.getString(JSONReader.TAG_LONGITUDE);
-                sDescription = obj.getString(JSONReader.TAG_DESCRIPTION);
+                if (obj.has(JSONReader.TAG_TYPE))
+                    sType = obj.getString(JSONReader.TAG_TYPE);
+                if (obj.has(JSONReader.TAG_EVENT_NAME))
+                    sTitle = obj.getString(JSONReader.TAG_EVENT_NAME);
+                if (obj.has(JSONReader.TAG_DAY))
+                    sDate = obj.getString(JSONReader.TAG_DAY);
+                if (obj.has(JSONReader.TAG_START_TIME))
+                    sStartTime = obj.getString(JSONReader.TAG_START_TIME);
+                if (obj.has(JSONReader.TAG_END_TIME))
+                    sEndTime = obj.getString(JSONReader.TAG_END_TIME);
+                if (obj.has(JSONReader.TAG_CATEGORY))
+                    sCategory = obj.getString(JSONReader.TAG_CATEGORY);
+                if (obj.has(JSONReader.TAG_PLACE))
+                    sPlace = obj.getString(JSONReader.TAG_PLACE);
+                if (obj.has(JSONReader.TAG_LATITUDE))
+                    sLatitude = obj.getString(JSONReader.TAG_LATITUDE);
+                if (obj.has(JSONReader.TAG_LONGITUDE))
+                    sLongitude = obj.getString(JSONReader.TAG_LONGITUDE);
+                if (obj.has(JSONReader.TAG_DESCRIPTION))
+                    sDescription = obj.getString(JSONReader.TAG_DESCRIPTION);
+                if (obj.has(JSONReader.TAG_PRICE))
+                    sPrice = obj.getString(JSONReader.TAG_PRICE);
+                if (obj.has(JSONReader.TAG_IMG_URL))
+                    sImgURL = obj.getString(JSONReader.TAG_IMG_URL);
+                if (obj.has(JSONReader.TAG_URL))
+                    sURL = obj.getString(JSONReader.TAG_URL);
 
-                alEvents.add(new Item(sEventName, sDate, sStartTime, sEndTime, sCategory, sPlace, sLatitude, sLongitude, sDescription));
+                if (sType.equals(Item.EVENT)) {
+                    Log.d(DEBUG_TAG, "New event: " + sTitle);
+                    alEvents.add(new Item(sTitle, sDate, sStartTime, sEndTime, sCategory,
+                            sPlace, sLatitude, sLongitude, sDescription, sPrice, sImgURL, sURL));
+                } else {
+                    Log.d(DEBUG_TAG, "New info item: " + sTitle);
+                    alEvents.add(new Item(sType, sTitle, sImgURL, sURL));
+                }
 
                 if (i != events.length() - 1) {
                     sNextDate = events.getJSONObject(i + 1).getString("DAY");
@@ -158,7 +186,10 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
             Log.e(JSONReader.DEBUG_TAG, "IOException" + e.toString());
             e.printStackTrace();
         } catch (Exception e) {
-            Log.e(JSONReader.DEBUG_TAG, "Error converting result " + e.toString());
+            Log.e(JSONReader.DEBUG_TAG, "Error " + e.toString());
+            e.printStackTrace();
+        } finally {
+            alEvents.add(new Item(Item.INFO, context.getResources().getString(R.string.JSON_error)));
         }
         return null;
     }

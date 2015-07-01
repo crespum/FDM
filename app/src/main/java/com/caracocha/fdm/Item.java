@@ -39,7 +39,7 @@ public class Item implements Parcelable {
     // Not yet implemented
     String sPrice;
     String sImgURL;
-    String sEventURL;
+    String sURL;
 
     String sItemDay; // e.g. Luns 2
     String sWeekDay; // Luns, martes... (Galician)
@@ -50,21 +50,56 @@ public class Item implements Parcelable {
 
     String sMessage;
 
-    public Item(String sType, String sMessage) {
+    /**
+     * Constructor for either a DAY or a MONTH card and simple INFO and AD items
+     * @param sType DAY, MONTH, INFO or AD
+     * @param sTitle Message to be displayed
+     */
+    public Item(String sType, String sTitle) {
         this.sType = sType;
         if (sType.equals(Item.DAY)) {
-            Calendar c = parseDate(sMessage);
+            Calendar c = parseDate(sTitle);
             this.sMessage = getDay(c) + " " + c.get(Calendar.DAY_OF_MONTH);
         } else if (sType.equals(Item.MONTH)) {
-            Calendar c = parseDate(sMessage);
+            Calendar c = parseDate(sTitle);
             this.sMessage = getMonth(c) + " " + c.get(Calendar.YEAR);
         } else {
-            this.sMessage = sMessage;
+            this.sMessage = sTitle;
         }
     }
 
-    public Item(String sTitle, String sDate, String sStartTime, String sEndTime, String sCategory,
-                String sPlace, String sLatitude, String sLongitude, String sDescription) {
+    /**
+     * Constructor for either a INFO or an AD item with additional information
+     * @param sType INFO or AD
+     * @param sTitle Message to be displayed
+     * @param sImgURL Link to the item small image
+     * @param sURL Link to launch on click
+     */
+    public Item(String sType, String sTitle, String sImgURL, String sURL) {
+        this.sType = sType;
+        this.sMessage = sTitle;
+        this.sImgURL = sImgURL;
+        this.sURL = sURL;
+    }
+
+
+    /**
+     * Constructor for an EVENT item
+     * @param sTitle
+     * @param sDate
+     * @param sStartTime
+     * @param sEndTime
+     * @param sCategory
+     * @param sPlace
+     * @param sLatitude
+     * @param sLongitude
+     * @param sDescription
+     * @param sPrice
+     * @param sImgURL
+     * @param sURL
+     */
+    public Item(String sTitle, String sDate, String sStartTime, String sEndTime, String sCategory, String sPlace,
+                String sLatitude, String sLongitude, String sDescription, String sPrice, String sImgURL, String sURL) {
         this.sType = Item.EVENT;
         this.sTitle = sTitle;
         this.sDate = sDate;
@@ -75,6 +110,9 @@ public class Item implements Parcelable {
         this.sLongitude = sLongitude;
         this.sDescription = sDescription;
         this.sPlace = sPlace;
+        this.sPrice = sPrice;
+        this.sImgURL = sImgURL;
+        this.sURL = sURL;
 
         Calendar c = parseDate(sDate);
         sWeekDay = getDay(c);
@@ -86,7 +124,6 @@ public class Item implements Parcelable {
         Log.d(DEBUG_TAG, "Day: " + iDay);
         Log.d(DEBUG_TAG, "Month: " + sMonth);
         Log.d(DEBUG_TAG, "Year: " + iYear);
-
     }
 
 
@@ -190,7 +227,7 @@ public class Item implements Parcelable {
         dest.writeString(this.sDescription);
         dest.writeString(this.sPrice);
         dest.writeString(this.sImgURL);
-        dest.writeString(this.sEventURL);
+        dest.writeString(this.sURL);
         dest.writeString(this.sItemDay);
         dest.writeString(this.sWeekDay);
         dest.writeInt(this.iDay);
@@ -213,7 +250,7 @@ public class Item implements Parcelable {
         this.sDescription = in.readString();
         this.sPrice = in.readString();
         this.sImgURL = in.readString();
-        this.sEventURL = in.readString();
+        this.sURL = in.readString();
         this.sItemDay = in.readString();
         this.sWeekDay = in.readString();
         this.iDay = in.readInt();

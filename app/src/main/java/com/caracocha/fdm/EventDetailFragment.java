@@ -53,8 +53,8 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         TextView tvPlace = (TextView) rootView.findViewById(R.id.fragment_event_detail_place);
         tvPlace.setText(event.sPlace);
         CardView cvMap = (CardView) rootView.findViewById(R.id.fragment_event_detail_map);
-        if(event.sLatitude != "-1" && event.sLongitude != "-1") {
-            cvMap.setOnClickListener(this); // TODO
+        if(event.sLatitude != null && event.sLongitude != null) {
+            cvMap.setOnClickListener(this);
         } else {
             cvMap.setVisibility(View.GONE);
         }
@@ -64,18 +64,18 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         TextView tvDate = (TextView) rootView.findViewById(R.id.fragment_event_detail_date);
         tvDate.setText(event.sDate);
         CardView cvWeb = (CardView) rootView.findViewById(R.id.fragment_event_detail_web);
-        if (event.sEventURL != "-1") {
-            cvWeb.setOnClickListener(this);
+        if (event.sURL != null) {
+            cvWeb.setOnClickListener(this);  // TODO Listener for navigate to URL
         } else {
             cvWeb.setVisibility(View.GONE);
         }
 
-        if (event.sPrice != "-1") {
+        if (event.sPrice != null) {
             TextView tvPrice = (TextView) rootView.findViewById(R.id.fragment_event_detail_price);
             tvPrice.setText(event.sPrice);
         }
 
-        if (event.sDescription != "-1") {
+        if (event.sDescription != null) {
             TextView tvDetails = (TextView) rootView.findViewById(R.id.fragment_event_detail_details);
             tvDetails.setText(event.sDescription);
         }
