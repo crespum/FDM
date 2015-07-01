@@ -14,7 +14,10 @@ places = {
     'Centro Cultural':(41.902892, -8.865532),
     'Estadio A Sangriña':(41.899626, -8.861348),
     'Montiño':(41.900999, -8.866232),
-    'Salcidos':(41.909254, -8.852916)
+    'Salcidos':(41.909254, -8.852916),
+    'Plaza do Reló':(41.9013013,-8.8744885),
+    'Praia do Muíño':(41.8748281,-8.8674021),
+    'Colexio dos Xesuítas':(41.8883961,-8.8515421,17)
     }
 """
 An event can have the following fields
