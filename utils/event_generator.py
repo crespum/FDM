@@ -28,52 +28,96 @@ event = {
     'DESCRIPTION':'-1',
     # New fields
     'PRICE':'-1',
-    'HEADER_IMG':'-1',
+    'IMG_URL':'-1',
     'EVENT_URL':'-1',
     'TYPE':'0'
 }
 
-def printDict(dict):
-    pass
+def printDict(d):
+    for ind, key in enumerate(d):
+        print(str(ind) + " - " + key)
 
-def printList(list):
-    pass
+def printList(l):
+    for ind, item in enumerate(l):
+        print(str(ind) + " - " + item)
+
+def getKey(ind, d):
+    # Convert dictionary keys in a tuple so they can be accessed with an index
+    keys = ()
+    for item in d:
+        keys = keys + (item,)
+
+    return keys[ind]
 
 with open("proba.txt", "r") as myfile:
     events = json.load(myfile)
+
+events = sorted(events, key=lambda event: time.strptime(event['START_TIME'] + ' ' + event['DAY'], "%H:%M %d/%m/%Y"))
+with open("proba.txt", "w") as myfile:
+    json.dump(events, myfile)
+
 
 while True:
     new_event = event
 
     print("Tipos de eventos: ")
-    print(printList(item_type))
-    new_event['TYPE'] = item_type(input("Seleccione un número: "))
+    printList(item_type)
+    new_event['TYPE'] = item_type[int(input("Seleccione un número: "))]
 
-    new_event['EVENT_NAME'] = input("Nome do evento: ")
-    new_event['DAY'] = input("Data dd/MM/yyyy: ")
-    new_event['START_TIME'] = input("Hora de inicio (hh:mm): ")
+    if new_event['TYPE'] == 'INFO' or new_event['TYPE'] == 'AD':
+        new_event['EVENT_NAME'] = input("Información a mostrar: ")
 
-    print("Tipos de eventos: ")
-    print(printList(categories))
-    new_event['CATEGORY'] = input("Seleccionar categoría: ")
+        event_url = input("Enlace á información: ")
+        if event_url is not '':
+            new_event['EVENT_URL'] = event_url
 
-    print("Lugares: ")
-    print(printDict(categories))
-    new_event['PLACE'] = input("Lugar (vacío se non está decidido): ")
-    if new_event['PLACE'].lower() in places:
-        new_event['LATITUDE'] = places[new_event['PLACE'].lower()][0]
-        new_event['LONGITUDE'] = places[new_event['PLACE'].lower()][1]
+        icon_img_url = input("URL da imaxe do icono: ")
+        if icon_img_url is not '':
+            new_event['IMG_URL'] = icon_img_url
 
-    new_event['DESCRIPTION'] = input("Descrición: ")
-    new_event['PRICE'] = input("Precio: ")
-    new_event['HEADER_IMG'] = input("URL da imaxe de cabeceira: ")
-    new_event['EVENT_URL'] = input("URL do evento: ")
 
-    self.events.append(new_event)
+    if new_event['TYPE'] == 'EVENT':
+        new_event['EVENT_NAME'] = input("Nome do evento: ")
+        new_event['DAY'] = input("Data dd/MM/yyyy: ")
+        new_event['START_TIME'] = input("Hora de inicio (hh:mm): ")
+
+        print("Tipos de eventos: ")
+        printList(categories)
+        new_event['CATEGORY'] = categories[int(input("Seleccionar categoría: "))]
+
+        print("Lugares: ")
+        printDict(places)
+        new_event['PLACE'] = getKey(int(input("Seleccionar lugar: ")), places)
+        if new_event['PLACE'].lower() in places:
+            new_event['LATITUDE'] = places[new_event['PLACE'].lower()][0]
+            new_event['LONGITUDE'] = places[new_event['PLACE'].lower()][1]
+
+
+        description = input("Descrición: ")
+        if description is not '':
+            new_event['DESCRIPTION'] = description
+
+        price = input("Precio: ")
+        if price is not '':
+            new_event['PRICE'] = price
+
+        header_img = input("URL da imaxe de cabeceira: ")
+        if header_img is not '':
+            new_event['IMG_URL'] = header_img
+
+        event_url = input("URL do evento: ")
+        if event_url is not '':
+            new_event['EVENT_URL'] = event_url
+
+    print('Engadir o seguinte evento? ')
+    print(new_event)
+    if input('Engadir? (s/n): ') == 's':
+        events.append(new_event)
+
     if input('Continuar? (s/n): ') == 'n':
         break;
 
-self.events = sorted(self.events, key=lambda event: time.strptime(event['DAY'], "%d/%m"))
+events = sorted(events, key=lambda event: time.strptime(event['START_TIME'] + ' ' + event['DAY'], "%H:%M %d/%m/%Y"))
 with open("proba.txt", "w") as myfile:
-    json.dump(self.events, myfile)
+    json.dump(events, myfile)
 
