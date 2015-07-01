@@ -2,7 +2,7 @@
 
 parentdir=${PWD%/*}
 
-size="hdpi"
+size="mdpi"
 
 if [ "$size" = "mdpi" ]; then
 
@@ -31,6 +31,7 @@ fi
 
 mkdir $folder
 
+convert ad.png -resize $dimensions "$folder""ad.png"
 convert art.png -resize $dimensions "$folder""art.png"
 convert band.png -resize $dimensions "$folder""band.png"
 convert fire.png -resize $dimensions "$folder""fire.png"
@@ -38,7 +39,7 @@ convert food.png -resize $dimensions "$folder""food.png"
 convert music.png -resize $dimensions "$folder""music.png"
 convert pregon.png -resize $dimensions "$folder""pregon.png"
 convert sport.png -resize $dimensions "$folder""sport.png"
-convert warning.png -resize $dimensions "$folder""warning.png"
+convert info.png -resize $dimensions "$folder""info.png"
 convert error.png -resize $dimensions "$folder""error.png"
 
 convert header_a_guarda.jpg -resize $dimensions_header "$folder""header_a_guarda.jpg"
