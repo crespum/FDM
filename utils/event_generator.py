@@ -1,5 +1,5 @@
 # coding=utf-8
-import time, json
+import time, json, io
 
 item_type = ('EVENT', 'INFO', 'AD')
 categories = ('pregon', 'music', 'food', 'sport', 'art', 'fire', 'band')
@@ -52,13 +52,8 @@ def getKey(ind, d):
 
     return keys[ind]
 
-with open("proba.txt", "r") as myfile:
+with open("Eventos.txt", "r") as myfile:
     events = json.load(myfile)
-
-events = sorted(events, key=lambda event: time.strptime(event['START_TIME'] + ' ' + event['DAY'], "%H:%M %d/%m/%Y"))
-with open("proba.txt", "w") as myfile:
-    json.dump(events, myfile)
-
 
 while True:
     new_event = {}
@@ -67,9 +62,9 @@ while True:
     printList(item_type)
     new_event['TYPE'] = item_type[int(input("Seleccione un número: "))]
 
-    new_event['EVENT_NAME'] = input("Información a mostrar: ")
+    new_event['EVENT_NAME'] = input("Evento: ")
     new_event['DAY'] = input("Data dd/MM/yyyy: ")
-    new_event['START_TIME'] = input("Hora de inicio (hh:mm): ")
+    new_event['START_TIME'] = input("Hora de inicio (hh:mm) (00:02 se dura todo o día): ")
 
     if new_event['TYPE'] == 'INFO' or new_event['TYPE'] == 'AD':
         event_url = input("Enlace á información: ")
@@ -89,9 +84,9 @@ while True:
         print("Lugares: ")
         printDict(places)
         new_event['PLACE'] = getKey(int(input("Seleccionar lugar: ")), places)
-        if new_event['PLACE'].lower() in places:
-            new_event['LATITUDE'] = places[new_event['PLACE'].lower()][0]
-            new_event['LONGITUDE'] = places[new_event['PLACE'].lower()][1]
+        if new_event['PLACE'] in places:
+            new_event['LATITUDE'] = str(places[new_event['PLACE']][0])
+            new_event['LONGITUDE'] = str(places[new_event['PLACE']][1])
 
 
         description = input("Descrición: ")
@@ -119,6 +114,7 @@ while True:
         break;
 
 events = sorted(events, key=lambda event: time.strptime(event['START_TIME'] + ' ' + event['DAY'], "%H:%M %d/%m/%Y"))
-with open("proba.txt", "w") as myfile:
-    json.dump(events, myfile)
+
+with io.open("Eventos.txt", "w") as myfile:
+    json.dump(events, myfile, ensure_ascii=False)
 
