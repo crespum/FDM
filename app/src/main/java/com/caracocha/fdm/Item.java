@@ -48,43 +48,48 @@ public class Item implements Parcelable {
     int iMonth; // Month number (0-11)
     int iYear; // Year number
 
-    String sMessage;
 
     /**
      * Constructor for either a DAY or a MONTH card and simple INFO and AD items
-     * @param sType DAY, MONTH, INFO or AD
+     *
+     * @param sType  DAY, MONTH, INFO or AD
      * @param sTitle Message to be displayed
      */
     public Item(String sType, String sTitle) {
         this.sType = sType;
         if (sType.equals(Item.DAY)) {
             Calendar c = parseDate(sTitle);
-            this.sMessage = getDay(c) + " " + c.get(Calendar.DAY_OF_MONTH);
+            this.sTitle = getDay(c) + " " + c.get(Calendar.DAY_OF_MONTH);
         } else if (sType.equals(Item.MONTH)) {
             Calendar c = parseDate(sTitle);
-            this.sMessage = getMonth(c) + " " + c.get(Calendar.YEAR);
-        } else {
-            this.sMessage = sTitle;
+            this.sTitle = getMonth(c) + " " + c.get(Calendar.YEAR);
+        } else if (sType.equals(Item.INFO)) {
+            this.sTitle = sTitle;
+            this.sURL = "https://play.google.com/store/apps/details?id=com.caracocha.fdm";
+        } else { // AD
+            this.sTitle = sTitle;
         }
     }
 
     /**
      * Constructor for either a INFO or an AD item with additional information
-     * @param sType INFO or AD
-     * @param sTitle Message to be displayed
+     *
+     * @param sType   INFO or AD
+     * @param sTitle  Message to be displayed
      * @param sImgURL Link to the item small image
-     * @param sURL Link to launch on click
+     * @param sURL    Link to launch on click
      */
     public Item(String sType, String sTitle, String sImgURL, String sURL) {
         this.sType = sType;
-        this.sMessage = sTitle;
-        this.sImgURL = sImgURL;
-        this.sURL = sURL;
+        this.sTitle = sTitle;
+        this.sImgURL = sValidateURL(sImgURL);
+        this.sURL = sValidateURL(sURL);
     }
 
 
     /**
      * Constructor for an EVENT item
+     *
      * @param sTitle
      * @param sDate
      * @param sStartTime
@@ -111,8 +116,8 @@ public class Item implements Parcelable {
         this.sDescription = sDescription;
         this.sPlace = sPlace;
         this.sPrice = sPrice;
-        this.sImgURL = sImgURL;
-        this.sURL = sURL;
+        this.sImgURL = sValidateURL(sImgURL);
+        this.sURL = sValidateURL(sURL);
 
         Calendar c = parseDate(sDate);
         sWeekDay = getDay(c);
@@ -126,6 +131,12 @@ public class Item implements Parcelable {
         Log.d(DEBUG_TAG, "Year: " + iYear);
     }
 
+
+    private String sValidateURL(String sURL) {
+        if (sURL != null && !sURL.startsWith("http://") && !sURL.startsWith("https://"))
+            return "http://" + sURL;
+        else return sURL;
+    }
 
     /**
      * @param sDate has the form dd/mm/yyyy
@@ -234,7 +245,6 @@ public class Item implements Parcelable {
         dest.writeString(this.sMonth);
         dest.writeInt(this.iMonth);
         dest.writeInt(this.iYear);
-        dest.writeString(this.sMessage);
     }
 
     protected Item(Parcel in) {
@@ -257,7 +267,6 @@ public class Item implements Parcelable {
         this.sMonth = in.readString();
         this.iMonth = in.readInt();
         this.iYear = in.readInt();
-        this.sMessage = in.readString();
     }
 
     public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {

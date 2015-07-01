@@ -28,6 +28,9 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     // INFO item
     protected TextView tvInfo;
 
+    // AD item
+    protected TextView tvAd;
+
     public ItemViewHolder(View itemView, int iViewType, onItemClickListener ifItemClick) {
         super(itemView);
         this.ifItemClick = ifItemClick;
@@ -46,9 +49,12 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
                 tvDay = (TextView) itemView.findViewById(R.id.item_day_day);
                 break;
             case Item.iINFO:
+                itemView.setOnClickListener(this);
                 tvInfo = (TextView) itemView.findViewById(R.id.item_info_text);
                 break;
             case Item.iAD:
+                itemView.setOnClickListener(this);
+                tvAd = (TextView) itemView.findViewById(R.id.item_ad_text);
                 break;
             default:
                 Log.d(DEBUG_TAG, "Wrong iViewType (" + iViewType + ")");
@@ -58,7 +64,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @Override
     public void onClick(View view) {
         ifItemClick.onItemClick(iPos);
-        Log.d(DEBUG_TAG, tvTitle.getText() + " clicked");
     }
 
     public interface onItemClickListener {

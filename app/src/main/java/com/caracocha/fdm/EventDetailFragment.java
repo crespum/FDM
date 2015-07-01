@@ -84,14 +84,21 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent("android.intent.action.VIEW",
-                Uri.parse((new StringBuilder("geo:0,0?q=")).append(event.sLatitude).append(",").append(event.sLongitude).append("(").
-                                append(event.sPlace).append(")").toString()));
+        Intent intent = null;
+        switch (view.getId()) {
+            case R.id.fragment_event_detail_map:
+                intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse((new StringBuilder("geo:0,0?q=")).append(event.sLatitude).append(",")
+                                .append(event.sLongitude).append("(").append(event.sPlace).append(")").toString()));
+                break;
+            case R.id.fragment_event_detail_web:
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.sURL));
+                break;
+        }
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(getActivity(), R.string.no_maps_app, Toast.LENGTH_LONG).show();
-            Log.e(DEBUG_TAG, "Install a maps application");
+            Log.e(DEBUG_TAG, "Error opening app");
         }
     }
 }

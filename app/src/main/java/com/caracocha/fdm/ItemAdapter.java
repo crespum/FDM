@@ -42,7 +42,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
             case Item.iINFO:
                 view = inflater.inflate(R.layout.item_info, viewGroup, false);
                 break;
+            case Item.iAD:
+                view = inflater.inflate(R.layout.item_ad, viewGroup, false);
+                break;
             default:
+                Log.e(DEBUG_TAG, "The received view type was wrong: " + iViewType);
                 break;
         }
         return new ItemViewHolder(view, iViewType, ifItemClick);
@@ -57,18 +61,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
                 itemViewHolder.tvTitle.setText(item.sTitle);
                 itemViewHolder.tvTime.setText(item.sStartTime);
                 itemViewHolder.tvPlace.setText(item.sPlace);
-                int imgCategory = context.getResources().getIdentifier(item.sCategory.toLowerCase(), "drawable", context.getPackageName());
+                int imgCategory = context.getResources().getIdentifier(item.sCategory.toLowerCase(),
+                        "drawable", context.getPackageName());
                 if (imgCategory != 0)
                     itemViewHolder.ivEvent.setImageResource(imgCategory);
                 break;
             case Item.iDAY:
-                itemViewHolder.tvDay.setText(item.sMessage);
+                itemViewHolder.tvDay.setText(item.sTitle);
                 break;
             case Item.iMONTH:
-                itemViewHolder.tvDay.setText(item.sMessage);
+                itemViewHolder.tvDay.setText(item.sTitle);
                 break;
             case Item.iINFO:
-                // TODO Create info cards
+                itemViewHolder.tvInfo.setText(item.sTitle);
+                break;
+            case Item.iAD:
+                itemViewHolder.tvAd.setText(item.sTitle);
                 break;
             default:
                 break;
@@ -78,15 +86,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
     @Override
     public int getItemViewType(int position) {
         String sType = alItems.get(position).sType;
-        if (sType == Item.EVENT) {
+        if (sType.equals(Item.EVENT)) {
             return Item.iEVENT;
-        } else if (sType == Item.DAY) {
+        } else if (sType.equals(Item.DAY)) {
             return Item.iDAY;
-        } else if (sType == Item.MONTH) {
+        } else if (sType.equals(Item.MONTH)) {
             return Item.iMONTH;
-        } else if (sType == Item.INFO) {
+        } else if (sType.equals(Item.INFO)) {
             return Item.iINFO;
-        } else if (sType == Item.AD) {
+        } else if (sType.equals(Item.AD)) {
             return Item.iAD;
         } else {
             return -1;

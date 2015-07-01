@@ -2,6 +2,8 @@ package com.caracocha.fdm;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
@@ -63,22 +65,30 @@ public class EventListActivity extends AppCompatActivity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemReceived(Item event) {
+    public void onItemReceived(Item item) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
 
         } else {
-            Log.d(DEBUG_TAG, "Begin fragment transaction");
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("event", event);
-            Fragment fragment = new EventDetailFragment();
-            fragment.setArguments(bundle);
-            FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
-            fragmenttransaction.replace(R.id.activity_event_list_fragment, fragment);
-            fragmenttransaction.addToBackStack(null);
-            fragmenttransaction.commit();
+            if (item.sType.equals(Item.EVENT)) {
+                Log.d(DEBUG_TAG, "Begin fragment transaction");
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("event", item);
+                Fragment fragment = new EventDetailFragment();
+                fragment.setArguments(bundle);
+                FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
+                fragmenttransaction.replace(R.id.activity_event_list_fragment, fragment);
+                fragmenttransaction.addToBackStack(null);
+                fragmenttransaction.commit();
+            } else {
+                if (item.sURL != null) {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(item.sURL));
+                    startActivity(i);
+                }
+            }
         }
     }
 

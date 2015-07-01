@@ -2,4 +2,6 @@
 <resources>
     <color name="primary">#6d1c8f</color>
     <color name="primary_dark">#5a1776</color>
+    <color name="ad_item_background">#c3c3c3</color>
+    <color name="day_item_background">#34495e</color>
 </resources>

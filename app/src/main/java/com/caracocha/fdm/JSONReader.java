@@ -185,10 +185,10 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
         } catch (IOException e) {
             Log.e(JSONReader.DEBUG_TAG, "IOException" + e.toString());
             e.printStackTrace();
+            alEvents.add(new Item(Item.INFO, context.getResources().getString(R.string.JSON_error)));
         } catch (Exception e) {
             Log.e(JSONReader.DEBUG_TAG, "Error " + e.toString());
             e.printStackTrace();
-        } finally {
             alEvents.add(new Item(Item.INFO, context.getResources().getString(R.string.JSON_error)));
         }
         return null;
