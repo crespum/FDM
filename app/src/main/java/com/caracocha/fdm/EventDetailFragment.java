@@ -41,6 +41,9 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event_detail, container, false);
+        CardView cvShare = (CardView) rootView.findViewById(R.id.fragment_event_detail_share);
+
+        cvShare.setOnClickListener(this);
         int imgHeaderID = getActivity().getResources().getIdentifier("header_" + event.sCategory.toLowerCase(), "drawable", getActivity().getPackageName());
         Log.d(DEBUG_TAG, "Searching for " + "header_" + event.sCategory.toLowerCase() + ".jpg -- Res: " + imgHeaderID);
         if (imgHeaderID != 0) {
@@ -65,7 +68,7 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
         tvDate.setText(event.sDate);
         CardView cvWeb = (CardView) rootView.findViewById(R.id.fragment_event_detail_web);
         if (event.sURL != null) {
-            cvWeb.setOnClickListener(this);  // TODO Listener for navigate to URL
+            cvWeb.setOnClickListener(this);
         } else {
             cvWeb.setVisibility(View.GONE);
         }
@@ -84,21 +87,24 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        Intent intent = null;
+        Intent intent;
         switch (view.getId()) {
             case R.id.fragment_event_detail_map:
                 intent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse((new StringBuilder("geo:0,0?q=")).append(event.sLatitude).append(",")
                                 .append(event.sLongitude).append("(").append(event.sPlace).append(")").toString()));
+                startActivity(intent);
                 break;
             case R.id.fragment_event_detail_web:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse(event.sURL));
+                startActivity(intent);
                 break;
-        }
-        try {
-            startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Log.e(DEBUG_TAG, "Error opening app");
+            case R.id.fragment_event_detail_share:
+                intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, event.sTitle + " @ " + event.sPlace + " (" + event.sDate + ")" + " #fdmapp");
+                startActivity(Intent.createChooser(intent, getResources().getString(R.string.ab_share)));
+                break;
         }
     }
 }

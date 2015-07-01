@@ -22,5 +22,10 @@
                 android:action="android.intent.action.VIEW"
                 android:data="https://twitter.com/xbcrespo" />
         </Preference>
+        <Preference
+            android:summary="@string/pref_summary_agradecementos"
+            android:title="@string/pref_title_agradecementos">
+        </Preference>
+
     </PreferenceCategory>
 </PreferenceScreen>

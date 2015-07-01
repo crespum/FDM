@@ -20,6 +20,8 @@ public class EventListFragment extends Fragment implements
 
     private static final String DEBUG_TAG = "EventListFragment";
 
+    public static final String JSON_LINK = "https://www.dropbox.com/s/ekflrytyix82z7g/Eventos.txt?dl=1";
+
     private RecyclerView rvEventList;
     private ItemAdapter iaEventList;
     private ArrayList<Item> alEvents;
@@ -39,7 +41,7 @@ public class EventListFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         alEvents = new ArrayList(10);
-        JSONReader jr = new JSONReader(getActivity(), this, "https://www.dropbox.com/s/8uiguzxotazjecd/proba.txt?dl=1", alEvents);
+        JSONReader jr = new JSONReader(getActivity(), this, EventListFragment.JSON_LINK, alEvents);
         jr.execute();
     }
 

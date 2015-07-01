@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class JSONReader extends AsyncTask<String, Integer, Void> {
 
     private static final String DEBUG_TAG = "ReaderJSON";
+
     private static final String TAG_EVENT_NAME = "EVENT_NAME";
     private static final String TAG_DAY = "DAY";  // Actually a date with format dd/MM/yyyy
     private static final String TAG_START_TIME = "START_TIME";

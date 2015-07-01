@@ -23,7 +23,7 @@
             android:layout_height="?android:listPreferredItemHeight"
             android:layout_marginRight="9.0dip"
             android:padding="1.0dip"
-            android:src="@drawable/warning" />
+            android:src="@drawable/ad" />
 
         <TextView
             android:id="@+id/item_ad_text"
