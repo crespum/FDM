@@ -78,9 +78,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
             tvPrice.setText(event.sPrice);
         }
 
+        TextView tvDetails = (TextView) rootView.findViewById(R.id.fragment_event_detail_details);
         if (event.sDescription != null) {
-            TextView tvDetails = (TextView) rootView.findViewById(R.id.fragment_event_detail_details);
             tvDetails.setText(event.sDescription);
+        } else {
+            tvDetails.setVisibility(View.GONE);
         }
         return rootView;
     }

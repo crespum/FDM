@@ -68,20 +68,20 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
      * @param sJSON
      */
     private void vReadJSONObject(String sJSON) {
-        String sType = null;
-        String sTitle = null;
-        String sDate = null;
-        String sStartTime = null;
-        String sEndTime = null;
-        String sCategory = null;
-        String sDescription = null;
-        String sPlace = null;
-        String sLatitude = null;
-        String sLongitude = null;
-        String sNextDate = null;
-        String sPrice = null;
-        String sImgURL = null;
-        String sURL = null;
+        String sType;
+        String sTitle;
+        String sDate;
+        String sStartTime;
+        String sEndTime;
+        String sCategory;
+        String sDescription;
+        String sPlace;
+        String sLatitude;
+        String sLongitude;
+        String sNextDate;
+        String sPrice;
+        String sImgURL;
+        String sURL;
 
         JSONObject obj;
 
@@ -106,32 +106,20 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
 
             for (int i = 0; i < events.length(); i++) {
                 obj = events.getJSONObject(i);
-                if (obj.has(JSONReader.TAG_TYPE))
-                    sType = obj.getString(JSONReader.TAG_TYPE);
-                if (obj.has(JSONReader.TAG_EVENT_NAME))
-                    sTitle = obj.getString(JSONReader.TAG_EVENT_NAME);
-                if (obj.has(JSONReader.TAG_DAY))
-                    sDate = obj.getString(JSONReader.TAG_DAY);
-                if (obj.has(JSONReader.TAG_START_TIME))
-                    sStartTime = obj.getString(JSONReader.TAG_START_TIME);
-                if (obj.has(JSONReader.TAG_END_TIME))
-                    sEndTime = obj.getString(JSONReader.TAG_END_TIME);
-                if (obj.has(JSONReader.TAG_CATEGORY))
-                    sCategory = obj.getString(JSONReader.TAG_CATEGORY);
-                if (obj.has(JSONReader.TAG_PLACE))
-                    sPlace = obj.getString(JSONReader.TAG_PLACE);
-                if (obj.has(JSONReader.TAG_LATITUDE))
-                    sLatitude = obj.getString(JSONReader.TAG_LATITUDE);
-                if (obj.has(JSONReader.TAG_LONGITUDE))
-                    sLongitude = obj.getString(JSONReader.TAG_LONGITUDE);
-                if (obj.has(JSONReader.TAG_DESCRIPTION))
-                    sDescription = obj.getString(JSONReader.TAG_DESCRIPTION);
-                if (obj.has(JSONReader.TAG_PRICE))
-                    sPrice = obj.getString(JSONReader.TAG_PRICE);
-                if (obj.has(JSONReader.TAG_IMG_URL))
-                    sImgURL = obj.getString(JSONReader.TAG_IMG_URL);
-                if (obj.has(JSONReader.TAG_URL))
-                    sURL = obj.getString(JSONReader.TAG_URL);
+                // if : else (shortcut)
+                sType = (obj.has(JSONReader.TAG_TYPE)) ? obj.getString(JSONReader.TAG_TYPE) : null;
+                sTitle = (obj.has(JSONReader.TAG_EVENT_NAME)) ? obj.getString(JSONReader.TAG_EVENT_NAME) : null;
+                sDate = (obj.has(JSONReader.TAG_DAY)) ? obj.getString(JSONReader.TAG_DAY) : null;
+                sStartTime = (obj.has(JSONReader.TAG_START_TIME)) ? obj.getString(JSONReader.TAG_START_TIME) : null;
+                sEndTime = (obj.has(JSONReader.TAG_END_TIME)) ? obj.getString(JSONReader.TAG_END_TIME) : null;
+                sCategory = (obj.has(JSONReader.TAG_CATEGORY)) ? obj.getString(JSONReader.TAG_CATEGORY) : null;
+                sPlace = (obj.has(JSONReader.TAG_PLACE)) ? obj.getString(JSONReader.TAG_PLACE) : null;
+                sLatitude = (obj.has(JSONReader.TAG_LATITUDE)) ? obj.getString(JSONReader.TAG_LATITUDE) : null;
+                sLongitude = (obj.has(JSONReader.TAG_LONGITUDE)) ? obj.getString(JSONReader.TAG_LONGITUDE) : null;
+                sDescription = (obj.has(JSONReader.TAG_DESCRIPTION)) ? obj.getString(JSONReader.TAG_DESCRIPTION) : null;
+                sPrice = (obj.has(JSONReader.TAG_PRICE)) ? obj.getString(JSONReader.TAG_PRICE) : null;
+                sImgURL = (obj.has(JSONReader.TAG_IMG_URL)) ? obj.getString(JSONReader.TAG_IMG_URL) : null;
+                sURL = (obj.has(JSONReader.TAG_URL)) ? obj.getString(JSONReader.TAG_URL) : null;
 
                 if (sType.equals(Item.EVENT)) {
                     Log.d(DEBUG_TAG, "New event: " + sTitle);
