@@ -89,13 +89,7 @@ def removeOldEvents():
     writeItemsFile(events)
 
 def addItem(events):
-    with open("proba.txt", "r") as myfile:
-        events = json.load(myfile)
-
-    # All day events are coded this way to be able to use sort function
-    for item in events:
-        if item['START_TIME'] == 'Todo o día':
-            item['START_TIME'] = '00:02'
+    events = readItemsFile()
 
     while True:
         new_event = {}
@@ -164,8 +158,8 @@ def addItem(events):
 parser = argparse.ArgumentParser(description='Manage events (add or remove)')
 parser.add_argument('-r', '--remove', help='Remove old events', action='store_true')
 args = parser.parse_args()
-
-if 'remove' in args:
+print(args)
+if args.remove:
     removeOldEvents()
 else:
     addItem()
