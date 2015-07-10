@@ -1,5 +1,5 @@
 # coding=utf-8
-import time, json, io
+import time, json, io, datetime, argparse
 
 item_type = ('EVENT', 'INFO', 'AD')
 categories = ('pregon', 'music', 'food', 'sport', 'art', 'fire', 'band')
@@ -17,7 +17,12 @@ places = {
     'Salcidos':(41.909254, -8.852916),
     'Plaza do Reló':(41.9013013,-8.8744885),
     'Praia do Muíño':(41.8748281,-8.8674021),
-    'Colexio dos Xesuítas':(41.8883961,-8.8515421,17)
+    'Colexio dos Xesuítas':(41.8883961,-8.8515421,17),
+    'Singular Lounge Disco':(41.902339,-8.869759),
+    'Atalaia':(41.9026239,-8.8800699),
+    'As de Copas':(41.902227,-8.869925,17),
+    'Santa Trega':(41.8929508,-8.8737453),
+    'San Caetano':(41.8945184,-8.8770014)
     }
 """
 An event can have the following fields
@@ -55,69 +60,112 @@ def getKey(ind, d):
 
     return keys[ind]
 
-with open("Eventos.txt", "r") as myfile:
-    events = json.load(myfile)
+def readItemsFile():
+    with open("proba.txt", "r") as myfile:
+        events = json.load(myfile)
 
-while True:
-    new_event = {}
+    # All day events are coded this way to be able to use sort function
+    for item in events:
+        if item['START_TIME'] == 'Todo o día':
+            item['START_TIME'] = '00:02'
 
-    print("Tipos de eventos: ")
-    printList(item_type)
-    new_event['TYPE'] = item_type[int(input("Seleccione un número: "))]
+    return events
 
-    new_event['EVENT_NAME'] = input("Evento: ")
-    new_event['DAY'] = input("Data dd/MM/yyyy: ")
-    new_event['START_TIME'] = input("Hora de inicio (hh:mm) (00:02 se dura todo o día): ")
+def writeItemsFile(events):
+    for item in events:
+        if item['START_TIME'] == '00:02':
+            item['START_TIME'] = 'Todo o día'
 
-    if new_event['TYPE'] == 'INFO' or new_event['TYPE'] == 'AD':
-        event_url = input("Enlace á información: ")
-        if event_url is not '':
-            new_event['URL'] = event_url
+    with io.open("proba.txt", "w") as myfile:
+        json.dump(events, myfile, ensure_ascii=False)
 
-        icon_img_url = input("URL da imaxe do icono: ")
-        if icon_img_url is not '':
-            new_event['IMG_URL'] = icon_img_url
+def removeOldEvents():
+    events = readItemsFile()
 
+    # Remove events from previous days
+    today = datetime.datetime.now().replace(hour=00, minute=00)
+    events = list(filter(lambda item: datetime.datetime.strptime(item['START_TIME'] + ' ' + item['DAY'], "%H:%M %d/%m/%Y") > today, events))
 
-    if new_event['TYPE'] == 'EVENT':
+    writeItemsFile(events)
+
+def addItem(events):
+    with open("proba.txt", "r") as myfile:
+        events = json.load(myfile)
+
+    # All day events are coded this way to be able to use sort function
+    for item in events:
+        if item['START_TIME'] == 'Todo o día':
+            item['START_TIME'] = '00:02'
+
+    while True:
+        new_event = {}
+
         print("Tipos de eventos: ")
-        printList(categories)
-        new_event['CATEGORY'] = categories[int(input("Seleccionar categoría: "))]
+        printList(item_type)
+        new_event['TYPE'] = item_type[int(input("Seleccione un número: "))]
 
-        print("Lugares: ")
-        printDict(places)
-        new_event['PLACE'] = getKey(int(input("Seleccionar lugar: ")), places)
-        if new_event['PLACE'] in places:
-            new_event['LATITUDE'] = str(places[new_event['PLACE']][0])
-            new_event['LONGITUDE'] = str(places[new_event['PLACE']][1])
+        new_event['EVENT_NAME'] = input("Evento: ")
+        new_event['DAY'] = input("Data dd/MM/yyyy: ")
+        new_event['START_TIME'] = input("Hora de inicio (hh:mm) (vacío se dura todo o día): ")
+        if 'START_TIME' not in new_event:
+            new_event['START_TIME'] = '00:02'
+
+        if new_event['TYPE'] == 'INFO' or new_event['TYPE'] == 'AD':
+            event_url = input("Enlace á información: ")
+            if event_url is not '':
+                new_event['URL'] = event_url
+
+            icon_img_url = input("URL da imaxe do icono: ")
+            if icon_img_url is not '':
+                new_event['IMG_URL'] = icon_img_url
 
 
-        description = input("Descrición: ")
-        if description is not '':
-            new_event['DESCRIPTION'] = description
+        if new_event['TYPE'] == 'EVENT':
+            print("Tipos de eventos: ")
+            printList(categories)
+            new_event['CATEGORY'] = categories[int(input("Seleccionar categoría: "))]
 
-        price = input("Precio: ")
-        if price is not '':
-            new_event['PRICE'] = price
+            print("Lugares: ")
+            printDict(places)
+            new_event['PLACE'] = getKey(int(input("Seleccionar lugar: ")), places)
+            if new_event['PLACE'] in places:
+                new_event['LATITUDE'] = str(places[new_event['PLACE']][0])
+                new_event['LONGITUDE'] = str(places[new_event['PLACE']][1])
 
-        header_img = input("URL da imaxe de cabeceira: ")
-        if header_img is not '':
-            new_event['IMG_URL'] = header_img
 
-        event_url = input("URL do evento: ")
-        if event_url is not '':
-            new_event['URL'] = event_url
+            description = input("Descrición: ")
+            if description is not '':
+                new_event['DESCRIPTION'] = description
 
-    print('Engadir o seguinte evento? ')
-    print(new_event)
-    if input('Engadir? (s/n): ') == 's':
-        events.append(new_event)
+            price = input("Precio: ")
+            if price is not '':
+                new_event['PRICE'] = price
 
-    if input('Continuar? (s/n): ') == 'n':
-        break;
+            header_img = input("URL da imaxe de cabeceira: ")
+            if header_img is not '':
+                new_event['IMG_URL'] = header_img
 
-events = sorted(events, key=lambda event: time.strptime(event['START_TIME'] + ' ' + event['DAY'], "%H:%M %d/%m/%Y"))
+            event_url = input("URL do evento: ")
+            if event_url is not '':
+                new_event['URL'] = event_url
 
-with io.open("Eventos.txt", "w") as myfile:
-    json.dump(events, myfile, ensure_ascii=False)
+        print('Engadir o seguinte evento? ')
+        print(new_event)
+        if input('Engadir? (s/n): ') == 's':
+            events.append(new_event)
 
+        #if input('Continuar? (s/n): ') == 'n':
+        #    break;
+
+    events = sorted(events, key=lambda event: time.strptime(event['START_TIME'] + ' ' + event['DAY'], "%H:%M %d/%m/%Y"))
+    writeItemsFile(events)
+
+# Parsing arguments
+parser = argparse.ArgumentParser(description='Manage events (add or remove)')
+parser.add_argument('-r', '--remove', help='Remove old events', action='store_true')
+args = parser.parse_args()
+
+if 'remove' in args:
+    removeOldEvents()
+else:
+    addItem()
