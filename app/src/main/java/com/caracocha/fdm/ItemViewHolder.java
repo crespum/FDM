@@ -46,7 +46,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
                 tvDay = (TextView) itemView.findViewById(R.id.item_day_day);
                 break;
             case Item.iMONTH:
-                tvDay = (TextView) itemView.findViewById(R.id.item_day_day);
+                tvDay = (TextView) itemView.findViewById(R.id.item_month_month);
                 break;
             case Item.iINFO:
                 itemView.setOnClickListener(this);

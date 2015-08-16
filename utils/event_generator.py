@@ -22,7 +22,13 @@ places = {
     'Atalaia':(41.9026239,-8.8800699),
     'As de Copas':(41.902227,-8.869925,17),
     'Santa Trega':(41.8929508,-8.8737453),
-    'San Caetano':(41.8945184,-8.8770014)
+    'San Caetano':(41.8945184,-8.8770014),
+    'Recreo artístico guardés':(41.903213,-8.87437),
+    'O Coruto':(41.9062441,-8.8620104),
+    'O Rosal':(41.936970, -8.836869),
+    'Praia da Lamiña':(41.877793, -8.861384),
+    'A Guía':(41.905326, -8.876671),
+    'Praza dos Seixiños (A Gándara)':(41.915780, -8.847085)
     }
 """
 An event can have the following fields
@@ -72,6 +78,8 @@ def readItemsFile():
     return events
 
 def writeItemsFile(events):
+    events = sorted(events, key=lambda event: time.strptime(event['START_TIME'] + ' ' + event['DAY'], "%H:%M %d/%m/%Y"))
+
     for item in events:
         if item['START_TIME'] == '00:02':
             item['START_TIME'] = 'Todo o día'
@@ -88,7 +96,7 @@ def removeOldEvents():
 
     writeItemsFile(events)
 
-def addItem(events):
+def addItem():
     events = readItemsFile()
 
     while True:
@@ -101,7 +109,7 @@ def addItem(events):
         new_event['EVENT_NAME'] = input("Evento: ")
         new_event['DAY'] = input("Data dd/MM/yyyy: ")
         new_event['START_TIME'] = input("Hora de inicio (hh:mm) (vacío se dura todo o día): ")
-        if 'START_TIME' not in new_event:
+        if new_event['START_TIME'] == '':
             new_event['START_TIME'] = '00:02'
 
         if new_event['TYPE'] == 'INFO' or new_event['TYPE'] == 'AD':
@@ -148,17 +156,16 @@ def addItem(events):
         if input('Engadir? (s/n): ') == 's':
             events.append(new_event)
 
-        #if input('Continuar? (s/n): ') == 'n':
-        #    break;
+        if input('Continuar? (s/n): ') == 'n':
+            break;
 
-    events = sorted(events, key=lambda event: time.strptime(event['START_TIME'] + ' ' + event['DAY'], "%H:%M %d/%m/%Y"))
     writeItemsFile(events)
 
 # Parsing arguments
 parser = argparse.ArgumentParser(description='Manage events (add or remove)')
 parser.add_argument('-r', '--remove', help='Remove old events', action='store_true')
 args = parser.parse_args()
-print(args)
+
 if args.remove:
     removeOldEvents()
 else:

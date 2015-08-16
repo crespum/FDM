@@ -24,4 +24,8 @@
     <string name="item_info">Produciuse un erro. Abra a aplicación máis tarde ou comprobe se existe unha actualización na Play Store</string>
     <string name="no_maps_app">Non se atopou unha aplicación para mapas</string>
     <string name="item_ad">A súa publicidade aquí (acaracocha@gmail.com)</string>
+
+    <string name="title_activity_header_image">HeaderImage</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

@@ -47,6 +47,7 @@ public class Item implements Parcelable {
     String sMonth; // Xaneiro, Febreiro... (Galician)
     int iMonth; // Month number (0-11)
     int iYear; // Year number
+    String sMonthAndYear; // e.g. Xaneiro 2015
 
 
     /**
@@ -60,6 +61,7 @@ public class Item implements Parcelable {
         if (sType.equals(Item.DAY)) {
             Calendar c = parseDate(sTitle);
             this.sTitle = getDay(c) + " " + c.get(Calendar.DAY_OF_MONTH);
+            this.sMonthAndYear = getMonth(c) + " " + c.get(Calendar.YEAR);
         } else if (sType.equals(Item.MONTH)) {
             Calendar c = parseDate(sTitle);
             this.sTitle = getMonth(c) + " " + c.get(Calendar.YEAR);
@@ -124,6 +126,7 @@ public class Item implements Parcelable {
         iDay = c.get(Calendar.DAY_OF_MONTH);
         sMonth = getMonth(c);
         iYear = c.get(Calendar.YEAR);
+        sMonthAndYear = sMonth + " " + iYear;
 
         Log.d(DEBUG_TAG, "Day number: " + sWeekDay);
         Log.d(DEBUG_TAG, "Day: " + iDay);

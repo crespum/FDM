@@ -101,7 +101,7 @@ public class JSONReader extends AsyncTask<String, Integer, Void> {
         Log.d(DEBUG_TAG, "Number of events:  " + events.length());
         try {
             // The first card indicates the  MONTH and the second the DAY
-            alEvents.add(new Item(Item.MONTH, events.getJSONObject(0).getString(JSONReader.TAG_DAY)));
+            //alEvents.add(new Item(Item.MONTH, events.getJSONObject(0).getString(JSONReader.TAG_DAY)));
             alEvents.add(new Item(Item.DAY, events.getJSONObject(0).getString(JSONReader.TAG_DAY)));
 
             for (int i = 0; i < events.length(); i++) {

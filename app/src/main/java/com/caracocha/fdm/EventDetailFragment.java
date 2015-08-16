@@ -1,6 +1,5 @@
 package com.caracocha.fdm;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,7 +11,8 @@ import android.view.ViewGroup;
 import android.app.Fragment;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 /**
  * A fragment representing a single Event detail screen.
@@ -42,13 +42,20 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event_detail, container, false);
         CardView cvShare = (CardView) rootView.findViewById(R.id.fragment_event_detail_share);
-
         cvShare.setOnClickListener(this);
+
+        ImageView ivHeader = (ImageView) rootView.findViewById(R.id.fragment_event_detail_header);
+
         int imgHeaderID = getActivity().getResources().getIdentifier("header_" + event.sCategory.toLowerCase(), "drawable", getActivity().getPackageName());
-        Log.d(DEBUG_TAG, "Searching for " + "header_" + event.sCategory.toLowerCase() + ".jpg -- Res: " + imgHeaderID);
-        if (imgHeaderID != 0) {
-            ImageView ivHeader = (ImageView) rootView.findViewById(R.id.fragment_event_detail_header);
-            ivHeader.setImageResource(imgHeaderID);
+        if(event.sImgURL != null) {
+            Glide.with(getActivity()).load(event.sImgURL)
+                    //.placeholder(R.drawable.loading_spinner_md)
+                    .error(imgHeaderID).into(ivHeader);
+            ivHeader.setOnClickListener(this);
+        } else {
+            if (imgHeaderID != 0) {
+                ivHeader.setImageResource(imgHeaderID);
+            }
         }
         TextView tvTitle = (TextView) rootView.findViewById(R.id.fragment_event_detail_title);
         tvTitle.setText(event.sTitle);
@@ -106,6 +113,11 @@ public class EventDetailFragment extends Fragment implements View.OnClickListene
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, event.sTitle + " @ " + event.sPlace + " (" + event.sDate + ")" + " #fdmapp");
                 startActivity(Intent.createChooser(intent, getResources().getString(R.string.ab_share)));
+                break;
+            case R.id.fragment_event_detail_header:
+                intent = new Intent(getActivity(), HeaderImageActivity.class);
+                intent.putExtra("IMAGE", event.sImgURL);
+                startActivity(intent);
                 break;
         }
     }

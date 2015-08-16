@@ -37,7 +37,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemViewHolder> {
                 view = inflater.inflate(R.layout.item_day, viewGroup, false);
                 break;
             case Item.iMONTH:
-                view = inflater.inflate(R.layout.item_day, viewGroup, false);
+                view = inflater.inflate(R.layout.item_month, viewGroup, false);
                 break;
             case Item.iINFO:
                 view = inflater.inflate(R.layout.item_info, viewGroup, false);

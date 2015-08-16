@@ -1,0 +1,1 @@
+[{"LATITUDE": "-1", "END_TIME": "-1", "LONGITUDE": "-1", "PLACE": "-1", "EVENT_NAME": "Proba coa informaci\u00f3n a mostrar", "PRICE": "-1", "TYPE": "info", "IMG_URL": "-1", "DESCRIPTION": "-1", "DAY": "01/01/2001", "EVENT_URL": "-1", "CATEGORY": "-1", "START_TIME": "12:00"}]
