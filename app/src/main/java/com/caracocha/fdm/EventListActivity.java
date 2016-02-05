@@ -30,6 +30,7 @@ public class EventListActivity extends AppCompatActivity
         implements EventListFragment.onItemReceivedListener {
 
     private static final String DEBUG_TAG = "EventListActivity";
+    private static final String PREFERENCES_TAG = "PreferencesFragment";
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -121,10 +122,13 @@ public class EventListActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_bar_main_settings:
-                FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
-                fragmenttransaction.replace(R.id.activity_event_list_fragment, new Preferences());
-                fragmenttransaction.addToBackStack(null);
-                fragmenttransaction.commit();
+                Preferences preferencesFragment = (Preferences)getFragmentManager().findFragmentByTag(PREFERENCES_TAG);
+                if (preferencesFragment == null || !preferencesFragment.isVisible()) {
+                    FragmentTransaction fragmenttransaction = getFragmentManager().beginTransaction();
+                    fragmenttransaction.replace(R.id.activity_event_list_fragment, new Preferences(), PREFERENCES_TAG);
+                    fragmenttransaction.addToBackStack(null);
+                    fragmenttransaction.commit();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
