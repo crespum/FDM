@@ -30,7 +30,9 @@ places = {
     'A Guía':(41.905326, -8.876671),
     'Praza dos Seixiños (A Gándara)':(41.915780, -8.847085),
     'A Sangriña':(41.900790, -8.862902),
-    'Castelo de Santa Cruz':(41.904506, -8.872801)
+    'Castelo de Santa Cruz':(41.904506, -8.872801),
+    'Praza de Abastos':(41.9013489,-8.8717742),
+    'Casa dos Alonsos':(41.9009132,-8.8740102)
     }
 """
 An event can have the following fields

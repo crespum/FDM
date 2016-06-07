@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "955006131610",
+    "firebase_url": "https://project-1240238454292140663.firebaseio.com",
+    "project_id": "project-1240238454292140663",
+    "storage_bucket": "project-1240238454292140663.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955006131610:android:5ea24614804765ab",
+        "android_client_info": {
+          "package_name": "com.caracocha.fdm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955006131610-2r32l56b4o57lld4rkno9vp3ggoclb16.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTLOwkBjiK46ymg7Ntcq6PO-2SjkR13ys"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
