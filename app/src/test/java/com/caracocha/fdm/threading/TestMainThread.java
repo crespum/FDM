@@ -1,6 +1,6 @@
-package com.caracocha.boilerplate.threading;
+package com.caracocha.fdm.threading;
 
-import com.caracocha.boilerplate.domain.executor.MainThread;
+import com.caracocha.fdm.domain.executor.MainThread;
 
 /**
  * Created by dmilicic on 1/8/16.

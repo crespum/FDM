@@ -1,4 +1,4 @@
-package com.caracocha.boilerplate;
+package com.caracocha.fdm;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
